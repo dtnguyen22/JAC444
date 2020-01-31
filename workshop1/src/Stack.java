@@ -1,13 +1,16 @@
 public class Stack {
-    static char[] dataStack;
-    static int top = 0;
+    private static char[] dataStack; //contains all the characters
+    private static int top = 0;      //number of characters in dataStack
 
-    public static void push(char aChar) {
+    private static void push(char aChar) {
         Stack.dataStack[top] = aChar;
         Stack.top++;
+        //after pushing a char in to the stack, we increase top
     }
-
-    public static char pop() {
+    private static char[] getStack(){
+        return Stack.dataStack;
+    }
+    private static char pop() {
         Stack.top--;
         return Stack.dataStack[top];
         //after taking the last element of the array, we reduce its size
@@ -15,8 +18,8 @@ public class Stack {
 
     public static boolean isPalindrome(char[] charArray) {
         if (charArray.length > 0) {
-            Stack.dataStack = new char[charArray.length];
-            //push first half of the charArray into Stack
+            char [] test = new char[charArray.length];
+            //push the charArray into Stack
             for(int i = 0; i < charArray.length; i++){
                 Stack.push(charArray[i]);
             }

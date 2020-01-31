@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="20c886b6-47db-45eb-a225-fa3ec2e8ebef" name="Default Changelist" comment="" />
+    <list default="true" id="20c886b6-47db-45eb-a225-fa3ec2e8ebef" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Palindrome.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Palindrome.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Stack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Stack.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +19,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1We2s9IY4GsFaoxRNFd4MvaJfP4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -66,6 +75,9 @@
       <option name="presentableId" value="Default" />
       <updated>1579495943835</updated>
       <workItem from="1579495947224" duration="5750000" />
+      <workItem from="1579581395357" duration="645000" />
+      <workItem from="1579761898587" duration="1410000" />
+      <workItem from="1580179702234" duration="609000" />
     </task>
     <servers />
   </component>
@@ -81,6 +93,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="254" y="86" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1600.860@0.0.1600.860" timestamp="1579498858420" />
+    <state x="580" y="186" key="FileChooserDialogImpl" timestamp="1580195574520">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="580" y="186" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1580195574520" />
     <state width="1557" height="222" key="GridCell.Tab.0.bottom" timestamp="1579506043256">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -113,5 +129,9 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state width="1557" height="276" key="GridCell.Tab.1.right/0.0.1600.860@0.0.1600.860" timestamp="1579498659847" />
+    <state x="182" y="51" key="new project wizard" timestamp="1579586153828">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="182" y="51" key="new project wizard/0.0.1600.860@0.0.1600.860" timestamp="1579586153828" />
   </component>
 </project>
