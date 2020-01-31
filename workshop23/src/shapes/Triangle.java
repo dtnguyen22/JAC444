@@ -6,13 +6,21 @@ public class Triangle implements Shape {
     private double sideThree;
 
     //constructor
+
+    public boolean isTriangle(double a, double b, double c){
+        if((a+b) <= c || (a+c)<= b || (b+c)<=a){
+            return false;
+        }
+        return true;
+    }
     public Triangle(double sideOne, double sideTwo, double sideThree) throws TriangleException{
-        if(sideOne > 0 && sideTwo > 0 && sideThree > 0){
+        if(sideOne > 0 && sideTwo > 0 && sideThree > 0
+                && isTriangle(sideOne, sideTwo, sideThree) == true){
             this.sideOne = sideOne;
             this.sideTwo = sideTwo;
             this.sideThree = sideThree;
         }else{
-            throw new TriangleException("Triangle - Invalid side!");
+            throw new TriangleException(String.format("Triangle %s %s %s - Invalid side!", sideOne, sideTwo, sideThree));
         }
     }
 
@@ -62,6 +70,6 @@ public class Triangle implements Shape {
     //override toString
     @Override
     public String toString(){
-        return "Triangle {s1="+this.sideOne+", s2"+this.sideTwo+", s3="+this.sideThree+"}";
+        return String.format("Triangle {s1=%s, s2=%s, s3=%s}", this.getSideOne(), this.getSideTwo(), this.getSideThree());
     }
 }

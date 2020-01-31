@@ -9,7 +9,7 @@ public class Circle implements Shape {
         if (radius > 0) {
             this.radius = radius;
         } else {
-            throw new CircleException("Circle - Invalid radius!");
+            throw new CircleException(String.format("Circle %s - Invalid radius!", radius));
         }
     }
 
@@ -37,6 +37,6 @@ public class Circle implements Shape {
     //override toString
     @Override
     public String toString() {
-        return "Circle {r=" + this.radius + "}";
+        return String.format("Circle{r=%s}", this.getRadius());
     }
 }

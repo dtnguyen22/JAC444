@@ -17,25 +17,21 @@ public class Main {
         }
         Shape[] shapes = new Shape[count];
         count = 0;
+        int validShapes = 0;
         try (BufferedReader br = new BufferedReader(new FileReader("src/shapes/shapes.txt"))) {
             while ((s = br.readLine()) != null) {
                 try {
                     String[] tokens = s.split(",");
-                    for (int i=1; i<tokens.length; i++){
-                        double aToken = new Double(tokens[i]);
-                        if(aToken <= 0){
-                            throw new Exception("Main - Invalid side!" + tokens[0] + tokens[1]);
-                        }
-                    }
-                    if (tokens[0].equals("Circle") ) {
+                    //if the first token is not in the shape list and the number of token is not match->ignore
+                    if (tokens[0].equals("Circle") && tokens.length == 2) {
                         shapes[count] = new Circle(new Double(tokens[1]));
-                    } else if (tokens[0].equals("Triangle") ) {
+                    } else if (tokens[0].equals("Triangle") && tokens.length == 4) {
                         shapes[count] = new Triangle(new Double(tokens[1]), new Double(tokens[2]), new Double(tokens[3]));
-                    } else if (tokens[0].equals("Parallelogram") ) {
+                    } else if (tokens[0].equals("Parallelogram") && tokens.length == 3) {
                         shapes[count] = new Parallelogram(new Double(tokens[1]), new Double(tokens[2]));
-                    } else if (tokens[0].equals("Rectangle") ) {
+                    } else if (tokens[0].equals("Rectangle") && tokens.length == 3 ) {
                         shapes[count] = new Rectangle(new Double(tokens[1]), new Double(tokens[2]));
-                    } else if (tokens[0].equals("Square") ) {
+                    } else if (tokens[0].equals("Square") && tokens.length == 2) {
                         shapes[count] = new Square(new Double(tokens[1]));
                     } else {
                         continue;
@@ -48,5 +44,12 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        System.out.println(String.format("%s shapes were created:", count));
+        for (Shape aShape : shapes){
+            if (aShape instanceof Shape){
+                System.out.println(String.format("%s perimeter = %g", aShape, aShape.perimeter()));
+            }
+        }
+
     }
 }
