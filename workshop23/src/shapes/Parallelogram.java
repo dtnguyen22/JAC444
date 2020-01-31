@@ -29,6 +29,7 @@ public class Parallelogram implements Shape {
             throw new ParallelogramException("Invalid side!");
         }
     }
+    
 
     public void setLength(double length) throws ParallelogramException {
         if(width > 0){
