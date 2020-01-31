@@ -12,7 +12,7 @@ public class Triangle implements Shape {
             this.sideTwo = sideTwo;
             this.sideThree = sideThree;
         }else{
-            throw new TriangleException("Invalid side length!");
+            throw new TriangleException("Triangle - Invalid side!");
         }
     }
 
@@ -25,7 +25,7 @@ public class Triangle implements Shape {
         if(sideOne > 0){
             this.sideOne = sideOne;
         }else{
-            throw new TriangleException("Invalid sideOne length!");
+            throw new TriangleException("Tri - Invalid sideOne length!");
         }
     }
 
@@ -37,7 +37,7 @@ public class Triangle implements Shape {
         if(sideTwo > 0){
             this.sideTwo = sideTwo;
         }else{
-            throw new TriangleException("Invalid sideTwo length!");
+            throw new TriangleException("Tri - Invalid sideTwo length!");
         }
     }
 
@@ -49,7 +49,7 @@ public class Triangle implements Shape {
         if(sideThree > 0){
             this.sideThree = sideThree;
         }else{
-            throw new TriangleException("Invalid sideThree length!");
+            throw new TriangleException("Tri - Invalid sideThree length!");
         }
     }
 

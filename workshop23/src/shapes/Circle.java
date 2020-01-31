@@ -9,7 +9,7 @@ public class Circle implements Shape {
         if (radius > 0) {
             this.radius = radius;
         } else {
-            throw new CircleException("Invalid radius!\n");
+            throw new CircleException("Circle - Invalid radius!");
         }
     }
 
@@ -23,7 +23,7 @@ public class Circle implements Shape {
         if (radius > 0) {
             this.radius = radius;
         } else {
-            throw new CircleException("Invalid radius!\n");
+            throw new CircleException("Circle - Invalid radius!");
         }
     }
 

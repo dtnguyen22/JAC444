@@ -10,7 +10,7 @@ public class Parallelogram implements Shape {
             this.width = width;
             this.length = length;
         }else{
-            throw new ParallelogramException("Invalid side(s)!");
+            throw new ParallelogramException("Parallelogram - Invalid side(s)!");
         }
     }
 
@@ -26,16 +26,16 @@ public class Parallelogram implements Shape {
         if(width > 0){
             this.width = width;
         }else{
-            throw new ParallelogramException("Invalid side!");
+            throw new ParallelogramException("Para - Invalid side!");
         }
     }
-    
+
 
     public void setLength(double length) throws ParallelogramException {
         if(width > 0){
             this.length = length;
         }else{
-            throw new ParallelogramException("Invalid side!");
+            throw new ParallelogramException("Para - Invalid side!");
         }
     }
 
