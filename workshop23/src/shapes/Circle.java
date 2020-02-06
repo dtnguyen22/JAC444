@@ -4,11 +4,29 @@ public class Circle implements Shape {
     private double radius;
 
     //constructor
+    public Circle(){
+        this.radius = 0;
+    }
+
     public Circle(double radius) throws CircleException {
-        if (radius > 0) {
+        if (isValid(radius) == true) {
             this.radius = radius;
         } else {
             throw new CircleException("Circle - Invalid radius!");
+        }
+    }
+
+    @Override
+    public boolean isValid() {
+        return isValid(this.radius);
+    }
+
+    //overloading
+    public boolean isValid(double radius){
+        if(radius > 0 ){
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -18,11 +36,9 @@ public class Circle implements Shape {
     }
 
     //set radius, if r < 0 throw exception
-    public void setRadius(double radius) throws CircleException {
+    public void setRadius(double radius) {
         if (radius > 0) {
             this.radius = radius;
-        } else {
-            throw new CircleException("Circle - Invalid radius!");
         }
     }
 

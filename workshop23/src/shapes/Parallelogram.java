@@ -5,12 +5,31 @@ public class Parallelogram implements Shape {
     private double length;
     //private double height;
 
+    public Parallelogram(){
+        this.width = 0;
+        this.length = 0;
+    }
+
     public Parallelogram(double width, double length) throws ParallelogramException{
-        if(width > 0 && length > 0){
+        if(isValid(width,length) == true){
             this.width = width;
             this.length = length;
         }else{
             throw new ParallelogramException("Invalid side!");
+        }
+    }
+
+    @Override
+    public boolean isValid() {
+        return isValid(this.width, this.length);
+    }
+
+    //overloading
+    public boolean isValid(double width, double length) {
+        if (width > 0 && length > 0) {
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -25,8 +44,6 @@ public class Parallelogram implements Shape {
     public void setWidth(double width) throws ParallelogramException {
         if(width > 0){
             this.width = width;
-        }else{
-            throw new ParallelogramException("Para - Invalid side!");
         }
     }
 
@@ -34,8 +51,6 @@ public class Parallelogram implements Shape {
     public void setLength(double length) throws ParallelogramException {
         if(width > 0){
             this.length = length;
-        }else{
-            throw new ParallelogramException("Para - Invalid side!");
         }
     }
 

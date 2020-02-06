@@ -6,57 +6,15 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Main {
-    //printing out all the shapes
-    public static void printShapes(Shape[] arrayShape){
-        for (Shape aShape : arrayShape){
+    public static void printResult(Shape[] shapes){
+        for (Shape aShape : shapes){
+            if(aShape != null && aShape.isValid()){
                 System.out.printf("%s perimeter = %g \n", aShape, aShape.perimeter());
-        }
-    }
-    //remove biggest circle(s) from shapes array
-    public static void removeBiggestCircle(Shape[] shapes){
-        double max = 0;
-        double element = shapes.length;
-        for (Shape cir : shapes){ //looking for the circle(s) which has the maximum perimeter
-            if(cir instanceof Circle){
-                if(cir.perimeter() > max){
-                    max = cir.perimeter();
-                }
-            }
-        }
-
-        for (int i = 0;i < shapes.length; i++){
-            if(shapes[i].perimeter() == max){
-                if(shapes[i] instanceof Circle){
-                    for(int j = i; j < shapes.length - i; j++){
-                        shapes[i] = shapes[i+1];
-                    }
-                }
             }
         }
     }
-
-    public static void removeSmallestTriangle(Shape[] shapes){
-        double min = 0;
-        for (Shape tri : shapes){ //looking for the circle(s) which has the maximum perimeter
-            if(tri instanceof Triangle){
-                if(min == 0){
-                    min = tri.perimeter();
-                }
-                if(tri.perimeter() < min){
-                    min = tri.perimeter();
-                }
-            }
-        }
-        for(Shape tri : shapes){ //remove it from the array
-            if(tri instanceof Triangle){
-                if(tri.perimeter() == min){
-                    tri = null;
-                }
-            }
-        }
-    }
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CircleException, TriangleException {
+        //task 1
         String s;
         int numOfShape = 0;
         try (BufferedReader br = new BufferedReader(new FileReader("src/shapes/shapes.txt"))) {
@@ -68,7 +26,6 @@ public class Main {
         }
         Shape[] shapes = new Shape[numOfShape];
         numOfShape = 0; //reset counter
-        int validShapes = 0;
         try (BufferedReader br = new BufferedReader(new FileReader("src/shapes/shapes.txt"))) {
             while ((s = br.readLine()) != null) {
                 try {
@@ -94,22 +51,54 @@ public class Main {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        } finally {
-            // the problem is there are unfilled elements in the shapes array
-            // we create a new array that fits the number of element in shapes array
-            Shape[] shapeList = new Shape[numOfShape];
-            for(int i  = 0 ; i < numOfShape; i++){
-                shapeList[i] = shapes[i];
-            }
-            shapes = shapeList;
         }
-        //task 1
-        System.out.printf("%s shapes were created:\n", shapes.length);
-       // printShapes(shapes);
-//        System.out.println(numOfShape);
-          removeBiggestCircle(shapes);
-//        removeSmallestTriangle(shapes);
-//        printShapes(shapes);
+        //printing results
+
+
+
+
+        //task 2
+        // delete cicles with maximum perimeter
+        double max = 0;
+        for (Shape cir : shapes){ //looking for the circle(s) which has the maximum perimeter
+            if(cir instanceof Circle){
+                if(cir.perimeter() > max){
+                    max = cir.perimeter();
+                }
+            }
+        }
+        for(int i = 0; i< numOfShape; i++){
+            if(shapes[i] instanceof Circle){
+                if(shapes[i].perimeter() == max){
+                    shapes[i] = null;
+                    numOfShape--;
+                }
+            }
+        }
+        //remove Smallest Triangle
+        double min = 999999999;
+        for (Shape tri : shapes){ //looking for the triangle(s) which has the minimum perimeter
+            if(tri instanceof Triangle){
+                if(tri.perimeter() < min){
+                    min = tri.perimeter();
+                }
+            }
+        }
+        for(int i = 0; i< numOfShape; i++){
+            if(shapes[i] instanceof Triangle){
+                if(shapes[i].perimeter() == min){
+                    shapes[i] = null;
+                    numOfShape--;
+                }
+            }
+        }
+
+
+        System.out.printf("%s shapes were created:\n", numOfShape);
+        printResult(shapes);
+
+
+
 
     }
 }
