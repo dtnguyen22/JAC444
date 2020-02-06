@@ -2,7 +2,7 @@ package shapes;
 
 public class Rectangle extends Parallelogram{
 
-    public Rectangle(double width, double length) throws ParallelogramException {
+    public Rectangle(double width, double length) throws RectangleException, ParallelogramException {
         super(width,length);
     }
 

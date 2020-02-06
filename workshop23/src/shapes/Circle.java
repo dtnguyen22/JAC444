@@ -1,7 +1,6 @@
 package shapes;
-
+import java.lang.Math;
 public class Circle implements Shape {
-    private final double PI = 3.14;
     private double radius;
 
     //constructor
@@ -9,7 +8,7 @@ public class Circle implements Shape {
         if (radius > 0) {
             this.radius = radius;
         } else {
-            throw new CircleException(String.format("Circle %s - Invalid radius!", radius));
+            throw new CircleException("Circle - Invalid radius!");
         }
     }
 
@@ -30,7 +29,7 @@ public class Circle implements Shape {
     //this func returns a circle's perimeter
     @Override
     public double perimeter() {
-        return this.radius * 2 * PI;
+        return this.radius * 2 * Math.PI;
     }
 
 

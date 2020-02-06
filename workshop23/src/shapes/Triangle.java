@@ -20,7 +20,7 @@ public class Triangle implements Shape {
             this.sideTwo = sideTwo;
             this.sideThree = sideThree;
         }else{
-            throw new TriangleException(String.format("Triangle %s %s %s - Invalid side!", sideOne, sideTwo, sideThree));
+            throw new TriangleException("Triangle - Invalid side(s)!");
         }
     }
 
@@ -64,7 +64,8 @@ public class Triangle implements Shape {
     //returns a triangle perimeter
     @Override
     public double perimeter(){
-        return this.sideOne+this.sideTwo+this.sideThree;
+        double peri = this.sideOne+this.sideTwo+this.sideThree;
+        return peri;
     }
 
     //override toString

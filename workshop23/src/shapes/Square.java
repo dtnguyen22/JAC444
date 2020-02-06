@@ -1,7 +1,7 @@
 package shapes;
 
 public class Square extends Rectangle {
-    public Square(double side) throws ParallelogramException{
+    public Square(double side) throws SquareException, RectangleException, ParallelogramException {
         super(side,side);
     }
 
