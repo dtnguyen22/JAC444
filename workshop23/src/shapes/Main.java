@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Main {
     public static void printResult(Shape[] shapes){
         for (Shape aShape : shapes){
-            if(aShape != null && aShape.isValid()){
+            if(aShape != null){
                 System.out.printf("%s perimeter = %g \n", aShape, aShape.perimeter());
             }
         }
@@ -71,7 +71,6 @@ public class Main {
             if(shapes[i] instanceof Circle){
                 if(shapes[i].perimeter() == max){
                     shapes[i] = null;
-                    numOfShape--;
                 }
             }
         }
@@ -88,7 +87,6 @@ public class Main {
             if(shapes[i] instanceof Triangle){
                 if(shapes[i].perimeter() == min){
                     shapes[i] = null;
-                    numOfShape--;
                 }
             }
         }
@@ -96,9 +94,30 @@ public class Main {
 
         System.out.printf("%s shapes were created:\n", numOfShape);
         printResult(shapes);
-
-
-
+        //task 3
+        double totalParallelogramPeri = 0;
+        double totalTrianglePeri = 0;
+//        for(int i = 0; i < shapes.length; i++){
+//            if(shapes[i]!=null){
+//                if(String.format(shapes[i].getClass().getSimpleName()).equals("Parallelogram")){
+//                    totalParallelogramPeri+=shapes[i].perimeter();
+//                }
+//            }
+//        }
+        for(Shape para : shapes){
+            if(para != null){
+               if(String.format(para.getClass().getSimpleName()).equals("Parallelogram")){
+                  totalParallelogramPeri+=para.perimeter();
+                }
+            }
+        }
+        for (Shape tri : shapes){ //looking for the triangle(s) which has the minimum perimeter
+            if(tri instanceof Triangle){
+                totalTrianglePeri+=tri.perimeter();
+            }
+        }
+        System.out.printf("Total perimeter of Parallelogram is: %s\n", totalParallelogramPeri);
+        System.out.printf("Total perimeter of Triangle is: %s\n", totalTrianglePeri);
 
     }
 }

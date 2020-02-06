@@ -5,11 +5,6 @@ public class Parallelogram implements Shape {
     private double length;
     //private double height;
 
-    public Parallelogram(){
-        this.width = 0;
-        this.length = 0;
-    }
-
     public Parallelogram(double width, double length) throws ParallelogramException{
         if(isValid(width,length) == true){
             this.width = width;
@@ -19,12 +14,6 @@ public class Parallelogram implements Shape {
         }
     }
 
-    @Override
-    public boolean isValid() {
-        return isValid(this.width, this.length);
-    }
-
-    //overloading
     public boolean isValid(double width, double length) {
         if (width > 0 && length > 0) {
             return true;

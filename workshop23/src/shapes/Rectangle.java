@@ -2,11 +2,13 @@ package shapes;
 
 public class Rectangle extends Parallelogram{
 
-    public Rectangle(){
-        super();
-    }
     public Rectangle(double width, double length) throws RectangleException, ParallelogramException {
         super(width,length);
+    }
+
+    @Override
+    public double perimeter() {
+        return super.perimeter();
     }
 
     @Override

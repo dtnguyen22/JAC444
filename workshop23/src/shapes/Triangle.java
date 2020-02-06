@@ -6,12 +6,6 @@ public class Triangle implements Shape {
     private double sideThree;
 
     //constructor
-    public Triangle(){
-        this.sideOne = 0;
-        this.sideTwo = 0;
-        this.sideThree = 0;
-    }
-
     public Triangle(double sideOne, double sideTwo, double sideThree) throws TriangleException{
         if(sideOne > 0 && sideTwo > 0 && sideThree > 0
                 && isValid(sideOne, sideTwo, sideThree) == true){
@@ -23,12 +17,6 @@ public class Triangle implements Shape {
         }
     }
 
-    @Override
-    public boolean isValid() {
-        return isValid(this.sideOne, this.sideTwo, this.sideThree);
-    }
-
-    //overloading
     public boolean isValid(double a, double b, double c){
         if((a+b) <= c || (a+c)<= b || (b+c)<=a){
             return false;
