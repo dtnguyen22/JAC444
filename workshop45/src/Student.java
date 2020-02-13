@@ -15,6 +15,16 @@ public class Student implements Serializable {
         this.courses = courses;
     }
 
+    @Override
+    public String toString(){
+        //for printing purpose
+        String listCourse = null;
+        for (String course : this.courses){
+            listCourse += course + " ";
+        }
+        return String.format("Student: %s\n Name: %s %s\n Courses: %s", this.stdID, this.firstName, this.lastName, listCourse);
+    }
+
     public int getStdID() {
         return stdID;
     }
