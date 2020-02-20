@@ -46,7 +46,6 @@ public class Main extends Application  {
 
         showStdButton.setOnAction(e->{
             StudentReader.display(fileNameInput.getText());
-            fileNameInput.setText("");
         });
         addStdButton.setOnAction(e->{
             StudentCreator.add(stdIdInput.getText(), stdFNameInput.getText(), stdLNameInput.getText(), stdCoursesInput.getText(), stdFileName.getText());
@@ -55,11 +54,7 @@ public class Main extends Application  {
             stdLNameInput.setText("");
             stdCoursesInput.setText("");
         });
-
-
-
-
-
+        
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10,10,10,10));
         grid.setVgap(10);
