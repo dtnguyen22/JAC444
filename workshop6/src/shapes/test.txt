@@ -1,0 +1,29 @@
+Circle{r=1.0} perimeter = 6.28319
+Circle{r=2.111} perimeter = 13.2638
+Circle{r=1.1} perimeter = 6.91150
+Triangle {s1=3.9, s2=4.0, s3=5.9} perimeter = 13.8000
+Square {s=3.0} perimeter = 12.0000
+Parallelogram {w=4.0, h=9.0}  perimeter = 26.0000
+Rectangle {w=3.0, l=5.1} perimeter = 16.2000
+Square {s=5.0} perimeter = 20.0000
+Parallelogram {w=3.9, h=9.2}  perimeter = 26.2000
+Triangle {s1=4.9, s2=5.0, s3=8.9} perimeter = 18.8000
+Rectangle {w=8.0, l=2.1} perimeter = 20.2000
+Circle{r=3.8} perimeter = 23.8761
+Parallelogram {w=3.1, h=9.8}  perimeter = 25.8000
+Triangle {s1=3.1, s2=4.1, s3=5.1} perimeter = 12.3000
+Parallelogram {w=0.1, h=0.2}  perimeter = 0.600000
+Triangle {s1=4.0, s2=5.0, s3=6.0} perimeter = 15.0000
+Rectangle {w=3.1, l=5.2} perimeter = 16.6000
+Circle{r=10.0} perimeter = 62.8319
+Square {s=0.1} perimeter = 0.400000
+Triangle {s1=3.1, s2=4.0, s3=5.0} perimeter = 12.1000
+Circle{r=2.0} perimeter = 12.5664
+Parallelogram {w=3.9, h=9.3}  perimeter = 26.4000
+Parallelogram {w=1.1, h=1.2}  perimeter = 4.60000
+Rectangle {w=3.0, l=5.2} perimeter = 16.4000
+Square {s=100.1} perimeter = 400.400
+Square {s=100.2} perimeter = 400.800
+Triangle {s1=3.9, s2=4.8, s3=5.7} perimeter = 14.4000
+Parallelogram {w=1.2, h=2.1}  perimeter = 6.60000
+Square {s=1.0E-5} perimeter = 4.00000e-05
