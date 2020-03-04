@@ -1,5 +1,5 @@
 package shapes;
 @FunctionalInterface
-public interface ShapeArea<T> {
-    double getArea(T t);
+public interface ShapeArea {
+    double getArea();
 }

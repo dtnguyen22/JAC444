@@ -3,7 +3,7 @@ import java.lang.Math;
 public class Circle implements Shape {
     private double radius;
     //workshop 6
-    private ShapeArea<Circle> circleArea = aCircle-> aCircle.radius*aCircle.radius*Math.PI; //return a double
+    private ShapeArea circleArea = ()-> this.radius*this.radius*Math.PI; //return a double
 
     //constructor
     public Circle(double radius) throws CircleException {
@@ -16,7 +16,7 @@ public class Circle implements Shape {
 
     //workshop6
     public double getCircleArea(){
-        return circleArea.getArea(this);
+        return circleArea.getArea();
     }
 
 
