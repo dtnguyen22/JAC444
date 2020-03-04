@@ -1,22 +1,17 @@
 package Chess;
 
 import javafx.application.Application;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Chess");
@@ -34,16 +29,15 @@ public class Main extends Application {
                 }
                 //for drawing the board
                 Square aSquare = new Square(x,y);
-                GridPane.setConstraints(aSquare, x, y);
                 GridPane.setConstraints(rect, x, y);
-                gridLayout.getChildren().add(aSquare);
-                gridLayout.getChildren().add(rect);
+                GridPane.setConstraints(aSquare, x, y);
+                // square has to be put after rect, overlay problem
+                gridLayout.getChildren().addAll(rect, aSquare);
                 //for mapping square->position
+                //set event listener for all the position.
+                aSquare.setOnMouseClicked(e-> System.out.println("123"));
+                //store all the square to the board
                 aBoard.getSquares().add(aSquare);
-                //set event listener for all the position
-                aSquare.setOnMouseClicked(e->{
-                    System.out.println("123");
-                });
 
             }
         }
@@ -55,14 +49,17 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+
     private VBox initializeMenu(){
         MenuBar mainMenu = new MenuBar();
         Menu firstMenu = new Menu("Board");
         MenuItem menuItem1 = new MenuItem("New board");
         menuItem1.setOnAction(e->{
+            System.out.println("123");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Hello wtf");
             alert.showAndWait();
+
         });
         MenuItem menuItem2 = new MenuItem("Clear the ");
         firstMenu.getItems().addAll(menuItem1, menuItem2);
