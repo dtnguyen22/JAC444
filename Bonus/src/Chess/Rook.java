@@ -3,8 +3,6 @@ package Chess;
 public class Rook extends Piece {
 
     public Rook() {
-        this.x = x;
-        this.y = y;
         this.name = "Rook";
         this.PIC_URL = "src/resources/rook.png";
 

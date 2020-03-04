@@ -57,7 +57,6 @@ public class Square extends Rectangle {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            System.out.printf("a piece is set at: %s - %s\n", aPiece.getX(), aPiece.getY());
             return true;
         }else{
             System.out.println("nope");

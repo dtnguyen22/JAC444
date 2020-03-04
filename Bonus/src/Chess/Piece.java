@@ -1,19 +1,14 @@
 package Chess;
 
 public abstract class Piece {
-    protected int x;
-    protected int y;
+    protected Square position;
     protected String name;
     protected String PIC_URL;
     public abstract boolean move();
     public abstract void getLegalMoves(Board board);
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+    public Square getPosition() {
+        return this.position;
     }
 
     public String getName() {
