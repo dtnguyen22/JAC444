@@ -1,24 +1,40 @@
 package Chess;
 
 
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class Square {
+
+public class Square extends Rectangle {
     private int x;
     private int y;
-    private Image image; //depends
+    private Piece aPiece;
 
     public Square(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public void setImage() throws FileNotFoundException {
-        FileInputStream fis = new FileInputStream("src\\resources\\bknight.png");
-        Image image = new Image(fis);
+    public double getPosX() {
+        return x;
+    }
+
+    public void setPosX(int x) {
+        this.x = x;
+    }
+
+    public int getPosY() {
+        return y;
+    }
+
+    public void setPosY(int y) {
+        this.y = y;
+    }
+
+    public boolean getImage(Piece piece) throws FileNotFoundException {
+        String pieceName = piece.toString();
+        FileInputStream fis = new FileInputStream("/src/resources/knight.png");
+        return true;
     }
 }

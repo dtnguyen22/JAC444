@@ -18,10 +18,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Chess");
-        VBox vBoxMenu = initializeMenu();
 
         //drawing the board
         GridPane gridLayout = new GridPane();
+        Board aBoard = new Board();
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 Rectangle rect = new Rectangle(80, 80);
@@ -30,11 +30,21 @@ public class Main extends Application {
                 }else{
                     rect.setFill(Color.GRAY);
                 }
+                //for drawing the board
                 GridPane.setConstraints(rect, x, y);
                 gridLayout.getChildren().add(rect);
+                //for mapping square->position
+                aBoard.getSquares().add(new Square(x,y));
+                //set event listener for all the position
+                rect.setOnMouseClicked(event -> {
+                    //trying to add event listener
+                    //should i add Tile ?
+//                    aBoard.getSquare(x,y);
+                });
             }
         }
         VBox mainLayout = new VBox();
+        VBox vBoxMenu = initializeMenu();
         mainLayout.getChildren().addAll(vBoxMenu, gridLayout);
         Scene scene = new Scene(mainLayout);
         primaryStage.setScene(scene);

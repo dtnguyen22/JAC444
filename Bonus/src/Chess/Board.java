@@ -1,18 +1,25 @@
 package Chess;
 
 
-import java.util.Set;
-import java.util.TreeSet;
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 
-public class Board  {
+import java.util.List;
+import java.util.Set;
+
+public class Board {
     private final int maxVertical = 8;
     private final int maxHorizontal = 8;
-    private TreeSet<Square> squares;
-    public Board(){
+    private List<Square> squares;
 
+    public Board() {
     }
 
-    public Set<Square> getSquares() {
+    public List<Square> getSquares() {
         return squares;
+    }
+
+    public Square getSquare(int x, int y) {
+        //even though stream returns a list, all the square has different x and y position
+        return (Square) squares.stream().filter(aSquare ->  aSquare.getX() == x && aSquare.getY()==y);
     }
 }
