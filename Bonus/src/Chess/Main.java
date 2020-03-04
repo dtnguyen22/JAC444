@@ -1,6 +1,7 @@
 package Chess;
 
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -10,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,16 +33,18 @@ public class Main extends Application {
                     rect.setFill(Color.GRAY);
                 }
                 //for drawing the board
+                Square aSquare = new Square(x,y);
+                GridPane.setConstraints(aSquare, x, y);
                 GridPane.setConstraints(rect, x, y);
+                gridLayout.getChildren().add(aSquare);
                 gridLayout.getChildren().add(rect);
                 //for mapping square->position
-                aBoard.getSquares().add(new Square(x,y));
+                aBoard.getSquares().add(aSquare);
                 //set event listener for all the position
-                rect.setOnMouseClicked(event -> {
-                    //trying to add event listener
-                    //should i add Tile ?
-//                    aBoard.getSquare(x,y);
+                aSquare.setOnMouseClicked(e->{
+                    System.out.println("123");
                 });
+
             }
         }
         VBox mainLayout = new VBox();
