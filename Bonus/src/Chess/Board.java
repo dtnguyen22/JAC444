@@ -1,6 +1,7 @@
 package Chess;
 
 
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +12,19 @@ public class Board {
     private final int maxHorizontal = 8;
     private List<Square> squares;
 
+
     public Board() {
         this.squares = new ArrayList<>();
     }
 
     public List<Square> getSquares() {
         return squares;
+    }
+
+    public boolean addPieceToBoard(Piece aPiece, Square aSquare){
+        int pos = this.squares.indexOf(aSquare);
+        this.squares.get(pos).setSquareWith(aPiece);
+        return true;
     }
 
 
