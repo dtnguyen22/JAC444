@@ -43,12 +43,11 @@ public class Square extends Rectangle {
         this.piece = piece;
     }
 
-    //
     public boolean isOccupied() {
         return this.piece != null;
     }
 
-    public void setSquareWith(Piece aPiece) {
+    public boolean setSquareWith(Piece aPiece) {
         if (!this.isOccupied()) {
             System.out.println("set");
             this.setPiece(aPiece);
@@ -58,8 +57,11 @@ public class Square extends Rectangle {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+            System.out.printf("a piece is set at: %s - %s\n", aPiece.getX(), aPiece.getY());
+            return true;
         }else{
             System.out.println("nope");
+            return false;
         }
     }
 

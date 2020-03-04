@@ -23,8 +23,7 @@ public class Board {
 
     public boolean addPieceToBoard(Piece aPiece, Square aSquare){
         int pos = this.squares.indexOf(aSquare);
-        this.squares.get(pos).setSquareWith(aPiece);
-        return true;
+        return this.squares.get(pos).setSquareWith(aPiece);
     }
 
 

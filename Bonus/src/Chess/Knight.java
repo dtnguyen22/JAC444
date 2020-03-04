@@ -1,15 +1,18 @@
 package Chess;
 
 public class Knight extends Piece {
-
-    public Knight() {
+    //a piece should know where it is located
+    public Knight(int x, int y) {
+        this.x = x;
+        this.y = y;
         this.name = "Knight";
-        this.PIC_URL = this.PIC_URL + this.name + ".png";
+        this.PIC_URL = "src/resources/knight.png";
     }
 
+
+
     @Override
-    public String getName() {
-        return this.name;
+    public void getLegalMoves(Board board) {
     }
 
     @Override

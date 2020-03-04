@@ -1,8 +1,22 @@
 package Chess;
 
 public abstract class Piece {
+    protected int x;
+    protected int y;
     protected String name;
-    protected String PIC_URL = "src/resources/";
-    abstract boolean move();
-    abstract String getName();
+    protected String PIC_URL;
+    public abstract boolean move();
+    public abstract void getLegalMoves(Board board);
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public String getName() {
+        return this.name;
+    }
 }

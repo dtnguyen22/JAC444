@@ -3,16 +3,19 @@ package Chess;
 public class Rook extends Piece {
 
     public Rook() {
+        this.x = x;
+        this.y = y;
         this.name = "Rook";
+        this.PIC_URL = "src/resources/rook.png";
+
     }
 
     @Override
-    boolean move() {
+    public boolean move() {
         return false;
     }
 
     @Override
-    public String getName() {
-        return this.name;
+    public void getLegalMoves(Board board) {
     }
 }

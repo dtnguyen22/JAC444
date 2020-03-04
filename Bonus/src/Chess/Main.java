@@ -47,7 +47,11 @@ public class Main extends Application {
                 //for mapping square->position
                 //set event listener for all the position.
                 aSquare.setOnMouseClicked(e -> {
-                    Knight aKnight = new Knight();
+                    if(aSquare.isOccupied()){
+                        System.out.println("Illegal move");
+                    }else{
+                    }
+                    Knight aKnight = new Knight(aSquare.get_X(), aSquare.get_Y());
                     aBoard.addPieceToBoard(aKnight, aSquare);
                 });
                 //store all the square to the board
@@ -78,8 +82,7 @@ public class Main extends Application {
         Menu firstMenu = new Menu("Board");
         MenuItem menuItem1 = new MenuItem("New board");
         menuItem1.setOnAction(e -> {
-            Knight aKnight = new Knight();
-            aBoard.addPieceToBoard(aKnight, aBoard.getSquares().get(2));
+
         });
         MenuItem menuItem2 = new MenuItem("Clear the ");
         firstMenu.getItems().addAll(menuItem1, menuItem2);
