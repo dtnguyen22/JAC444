@@ -50,6 +50,6 @@ public class Circle implements Shape {
     //override toString
     @Override
     public String toString() {
-        return String.format("Circle{r=%s}", this.getRadius());
+        return String.format("Circle{r=%s} perimeter = %g, area = %g", this.getRadius(), this.perimeter(), this.getCircleArea());
     }
 }

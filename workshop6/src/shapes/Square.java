@@ -13,6 +13,6 @@ public class Square extends Rectangle {
 
     @Override
     public String toString(){
-        return String.format("Square {s=%s}", this.getWidth());
+        return String.format("Square {s=%s} perimeter = %g, area = %g", this.getWidth(), this.perimeter(), this.getSquareArea());
     }
 }

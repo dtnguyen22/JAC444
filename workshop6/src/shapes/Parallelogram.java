@@ -49,6 +49,6 @@ public class Parallelogram implements Shape {
     }
     @Override
     public String toString(){
-        return "Parallelogram {w="+this.width+", h="+this.length+"} ";
+        return String.format("Parallelogram {w=%s, h=%s}, perimeter = %g", this.getWidth(), this.getLength(), this.perimeter());
     }
 }

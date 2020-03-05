@@ -14,6 +14,6 @@ public class Rectangle extends Parallelogram{
 
     @Override
     public String toString(){
-        return String.format("Rectangle {w=%s, l=%s}", this.getWidth(), this.getLength());
+        return String.format("Rectangle {w=%s, l=%s}, perimeter = %g, area = %g", this.getWidth(), this.getLength(), this.perimeter(), this.getRectangleArea());
     }
 }

@@ -12,24 +12,8 @@ public class Main {
         double area = 0;
         for (Shape aShape : shapes){
             if(aShape != null){
-                System.out.printf("%s perimeter = %g", aShape, aShape.perimeter());
-                if(aShape.getClass().getSimpleName().equals("Square")){
-                    area = ((Square)aShape).getSquareArea();
-                }
-                if(aShape.getClass().getSimpleName().equals("Rectangle")){
-                    area = ((Rectangle)aShape).getRectangleArea();
-                }
-                if(aShape.getClass().getSimpleName().equals("Circle")){
-                    area = ((Circle)aShape).getCircleArea();
-                }
-                if(area != 0){
-                    System.out.printf(", area = %g\n", area);
-                    area = 0;
-                }else{
-                    System.out.println("");
-                }
+                System.out.println(aShape);
             }
-
         }
     }
     public static void main(String[] args) throws CircleException, TriangleException {

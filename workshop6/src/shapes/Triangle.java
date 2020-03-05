@@ -65,6 +65,6 @@ public class Triangle implements Shape {
     //override toString
     @Override
     public String toString(){
-        return String.format("Triangle {s1=%s, s2=%s, s3=%s}", this.getSideOne(), this.getSideTwo(), this.getSideThree());
+        return String.format("Triangle {s1=%s, s2=%s, s3=%s} perimeter = %g", this.getSideOne(), this.getSideTwo(), this.getSideThree(), this.perimeter());
     }
 }
