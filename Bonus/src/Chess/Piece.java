@@ -4,7 +4,7 @@ public abstract class Piece {
     protected Square position;
     protected String PIC_URL;
     public abstract boolean move();
-    public abstract void getPossibleMoves(Board board);
+    public abstract Move getPossibleMoves(Board board);
 
     public Square getPosition() {
         return position;

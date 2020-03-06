@@ -1,15 +1,14 @@
 package Chess;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Move {
     private Piece piece;
-    private Map<Square, Square> movementTracker = new HashMap<>();
+    private LinkedList<Square> moves;
 
-    public Move(Piece aPiece, Square currentPos, Square nextPos){
+    public Move(Piece aPiece) {
         this.piece = aPiece;
-        this.movementTracker.put(currentPos, nextPos);
+        this.moves = new LinkedList<>();
     }
 
     public Piece getPiece() {
@@ -20,11 +19,8 @@ public class Move {
         this.piece = aPiece;
     }
 
-    public Map<Square, Square> getMovementTracker() {
-        return this.movementTracker;
+    public LinkedList<Square> getMoves() {
+        return this.moves;
     }
 
-    public String getString(Square aSquare) {
-        return this.movementTracker.get(aSquare).toString();
-    }
 }
