@@ -51,7 +51,7 @@ public class Main extends Application {
                         System.out.println("Illegal move");
                     }else{
                     }
-                    Knight aKnight = new Knight(aSquare.get_X(), aSquare.get_Y());
+                    Knight aKnight = new Knight(aSquare);
                     aBoard.addPieceToBoard(aKnight, aSquare);
                 });
                 //store all the square to the board

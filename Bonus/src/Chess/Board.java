@@ -21,9 +21,12 @@ public class Board {
         return squares;
     }
 
+
     public boolean addPieceToBoard(Piece aPiece, Square aSquare){
         int pos = this.squares.indexOf(aSquare);
-        return this.squares.get(pos).setSquareWith(aPiece);
+        this.squares.get(pos).setSquareWith(aPiece);
+        aSquare.getPiece().getPossibleMoves(this);
+        return true;
     }
 
 

@@ -3,7 +3,6 @@ package Chess;
 public class Rook extends Piece {
 
     public Rook() {
-        this.name = "Rook";
         this.PIC_URL = "src/resources/rook.png";
 
     }
@@ -14,6 +13,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void getLegalMoves(Board board) {
+    public void getPossibleMoves(Board board) {
+
     }
 }

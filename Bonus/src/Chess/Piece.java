@@ -2,16 +2,17 @@ package Chess;
 
 public abstract class Piece {
     protected Square position;
-    protected String name;
     protected String PIC_URL;
     public abstract boolean move();
-    public abstract void getLegalMoves(Board board);
+    public abstract void getPossibleMoves(Board board);
 
     public Square getPosition() {
-        return this.position;
+        return position;
     }
 
-    public String getName() {
-        return this.name;
+    public void setPosition(Square position) {
+        this.position = position;
     }
+
+
 }
