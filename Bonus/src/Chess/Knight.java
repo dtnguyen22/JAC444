@@ -26,6 +26,7 @@ public class Knight extends Piece {
                 if (tmpY >= 0 && tmpY < 8) {
                     //if there
                     Square tmpSquare = new Square(tmpX, tmpY);
+                    board.isOccupiedBy(tmpSquare);
                     Move aMove = new Move(this, this.position, tmpSquare);
                     this.possibleMove.add(aMove);
                 }
