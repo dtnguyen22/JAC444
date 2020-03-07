@@ -1,10 +1,7 @@
 package Chess;
 
 
-import javafx.event.Event;
-import javafx.scene.control.MenuBar;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -21,7 +18,8 @@ public class Board {
     public Board() {
         this.squares = new ArrayList<>();
     }
-    public GridPane initialize(){
+
+    public GridPane initialize() {
         GridPane gridLayout = new GridPane();
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
@@ -39,7 +37,7 @@ public class Board {
                 gridLayout.getChildren().addAll(rect, aSquare);
                 //for mapping square->position
                 //set event listener for all the position.
-                aSquare.setOnMouseClicked(e->{
+                aSquare.setOnMouseClicked(e -> {
                     this.aSquareIsClicked(aSquare);
                 });
                 //store all the square to the board
@@ -51,29 +49,46 @@ public class Board {
 
     //for event listener on all the squares on the board
     //if it there is no move in moveHistory, set aSquare with a piece
-    public void aSquareIsClicked(Square clickedSquare){
-        if(this.moveHistory == null){
+    public void aSquareIsClicked(Square clickedSquare) {
+        if (this.moveHistory == null) {
+            System.out.println("move history == null!");
+
             Knight aKnight = new Knight(clickedSquare);
             clickedSquare.setSquareWith(aKnight);
+            //calculate and set possible move for the piece inside that square
+            clickedSquare.getPiece().calculatePossibleMoves(this);
             //create move history and add the first move into it
             this.moveHistory = new Move(aKnight);
             this.moveHistory.getMoves().add(clickedSquare);
-        }else{
-            //if the clicked square is in the historyMove
-            if(this.moveHistory.getMoves().contains(clickedSquare)){
-                System.out.println("Illegal move!");
-            }else{
-                //moveHistory -> last Square-> piece inside
-                Move possibleMove = this.moveHistory.getMoves().getLast().getPiece().calculatePossibleMoves(this);
-                if(possibleMove.getMoves().contains(clickedSquare)){
-                    clickedSquare.setSquareWith(this.moveHistory.getMoves().getLast().getPiece());
-                    this.moveHistory.getMoves().getLast().setFill(Color.BLUE);
-                    this.moveHistory.getMoves().add(clickedSquare);
-                }else{
-                    System.out.println("Illegal move!");
-                }
+        } else {
+            //get allowed moves based on last move
+            Move allowedMoveBasedOnLastMove = this.moveHistory.getMoves().getLast().getPiece().getPossibleMove();
+            //next move is not in allowed move
+            if(clickedSquare == this.moveHistory.getMoves().getLast()){
+                System.out.println("Illegal move - do not make a move on previous position");
+                return;
+            }
+            if (!allowedMoveBasedOnLastMove.getMoves().contains(clickedSquare)) {
+                System.out.println("Illegal move for a knight");
+            }else {
+                // allowedMoveBaseOnLastMove - allTheMovesWereMade = next allowed move
+                allowedMoveBasedOnLastMove.getMoves().removeAll(this.moveHistory.getMoves());
+                allowedMoveBasedOnLastMove.getMoves().forEach((System.out::println));
+                //set new square with previous square's piece
+                clickedSquare.setSquareWith(this.moveHistory.getPiece());
+
+                //set previous square color
+                this.moveHistory.getMoves().getLast().setFill(Color.BLUE);
+                //add the square which is newly set to the moveHistory
+                this.moveHistory.getMoves().add(clickedSquare);
+                //update position for newly set piece
+                this.moveHistory.getMoves().getLast().getPiece().setPosition(clickedSquare);
+                //calculate and set possible move for the piece inside new quare, prepare for next move
+                this.moveHistory.getMoves().getLast().getPiece().calculatePossibleMoves(this);
+                this.moveHistory.getMoves().getLast().getPiece().getPossibleMove().getMoves().forEach(System.out::println);
             }
         }
+        //after everything is done add the square to history move
     }
 
 
@@ -82,19 +97,13 @@ public class Board {
     }
 
 
-
-    public Square getSquareByXAndY(int x, int y){
-        List<Square> aSquare = this.getSquares().stream().filter(current-> (current.get_X()==x && current.get_Y()==y)).collect(Collectors.toList());
+    public Square getSquareByXAndY(int x, int y) {
+        List<Square> aSquare = this.getSquares().stream().filter(current -> (current.get_X() == x && current.get_Y() == y)).collect(Collectors.toList());
         return aSquare.get(0);
     }
 
-    public boolean isOccupied(Square aSquare){
-        if (aSquare.getPiece() != null){
-            System.out.println(aSquare + " is occupied");
-            return true;
-        }else{
-            return false;
-        }
+    public boolean isOccupied(Square aSquare) {
+        return aSquare.getPiece() != null;
     }
 
 }

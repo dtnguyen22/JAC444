@@ -7,20 +7,19 @@ import java.util.List;
 import java.util.Optional;
 
 public class Knight extends Piece {
-    private Move possibleMove ;
+    private Move possibleMove;
 
     //a piece should know where it is located
     public Knight(Square aSquare) {
-        this.possibleMove = new Move(this);
+        this.possibleMove =  new Move(this);
         this.position = aSquare;
         this.PIC_URL = "src/resources/knight.png";
     }
 
+    @Override
     public Move getPossibleMove() {
         return this.possibleMove;
     }
-
-
 
     @Override
     public Move calculatePossibleMoves(Board board) {
@@ -40,7 +39,6 @@ public class Knight extends Piece {
                 }
             }
         }
-        this.possibleMove.getMoves().forEach((System.out::println));
         this.possibleMove = tmpMove;
         return tmpMove;
     }
