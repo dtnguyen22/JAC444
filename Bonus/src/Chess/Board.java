@@ -51,26 +51,30 @@ public class Board {
 
     //for event listener on all the squares on the board
     //if it there is no move in moveHistory, set aSquare with a piece
-    public void aSquareIsClicked(Square aSquare){
+    public void aSquareIsClicked(Square clickedSquare){
         if(this.moveHistory == null){
-            Knight aKnight = new Knight(aSquare);
-            aSquare.setSquareWith(aKnight);
+            Knight aKnight = new Knight(clickedSquare);
+            clickedSquare.setSquareWith(aKnight);
             //create move history and add the first move into it
             this.moveHistory = new Move(aKnight);
-            this.moveHistory.getMoves().add(aSquare);
+            this.moveHistory.getMoves().add(clickedSquare);
         }else{
             //if the clicked square is in the historyMove
-            if(this.moveHistory.getMoves().contains(aSquare)){
+            if(this.moveHistory.getMoves().contains(clickedSquare)){
                 System.out.println("Illegal move!");
             }else{
                 //moveHistory -> last Square-> piece inside
-                Move possibleMove = this.moveHistory.getMoves().getLast().getPiece().getPossibleMoves(this);
+                Move possibleMove = this.moveHistory.getMoves().getLast().getPiece().calculatePossibleMoves(this);
+                if(possibleMove.getMoves().contains(clickedSquare)){
+                    clickedSquare.setSquareWith(this.moveHistory.getMoves().getLast().getPiece());
+                    this.moveHistory.getMoves().getLast().setFill(Color.BLUE);
+                    this.moveHistory.getMoves().add(clickedSquare);
+                }else{
+                    System.out.println("Illegal move!");
+                }
             }
         }
-
-
     }
-
 
 
     public List<Square> getSquares() {

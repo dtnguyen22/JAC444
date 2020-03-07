@@ -16,8 +16,15 @@ public class Knight extends Piece {
         this.PIC_URL = "src/resources/knight.png";
     }
 
+    public Move getPossibleMove() {
+        return this.possibleMove;
+    }
+
+
+
     @Override
-    public Move getPossibleMoves(Board board) {
+    public Move calculatePossibleMoves(Board board) {
+        Move tmpMove = new Move(this.position.getPiece());
         int[] possibleX = {2, 1, -1, -2, -2, -1, 1, 2};
         int[] possibleY = {-1, -2, -2, -1, 1, 2, 2, 1};
         for (int i = 0; i < 8; i++) {
@@ -28,13 +35,14 @@ public class Knight extends Piece {
                     //if there
                     Square tmpSquare = board.getSquareByXAndY(tmpX, tmpY);
                     if(tmpSquare != null && !board.isOccupied(tmpSquare)){
-                        this.possibleMove.getMoves().add(tmpSquare);
+                        tmpMove.getMoves().add(tmpSquare);
                     }
                 }
             }
         }
         this.possibleMove.getMoves().forEach((System.out::println));
-        return this.possibleMove;
+        this.possibleMove = tmpMove;
+        return tmpMove;
     }
 
 
