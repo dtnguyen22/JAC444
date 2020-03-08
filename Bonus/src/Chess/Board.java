@@ -1,9 +1,13 @@
 package Chess;
 
 
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +23,29 @@ public class Board {
         this.squares = new ArrayList<>();
     }
 
-    public GridPane initialize() {
+    public VBox initialize() {
         GridPane gridLayout = new GridPane();
+        MenuBar mainMenu = new MenuBar();
+        VBox mainLayout = new VBox();
+        /*menu bar ----------------------------------*/
+        //menu 1
+        Menu firstMenu = new Menu("Board");
+        MenuItem menuItem1 = new MenuItem("New board");
+        MenuItem menuItem2 = new MenuItem("Clear the ");
+        firstMenu.getItems().addAll(menuItem1, menuItem2);
+        //menu 2
+        Menu secondMenu = new Menu("Select Piece");
+        RadioMenuItem radKnight = new RadioMenuItem("Knight");
+        RadioMenuItem radRook = new RadioMenuItem("Rook");
+        ToggleGroup toggleGroup = new ToggleGroup();
+        toggleGroup.getToggles().add(radKnight);
+        toggleGroup.getToggles().add(radRook);
+        secondMenu.getItems().add(radKnight);
+        secondMenu.getItems().add(radRook);
+        mainMenu.getMenus().add(firstMenu);
+        mainMenu.getMenus().add(secondMenu);
+        /*--------------------------------------------menu bar*/
+
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 Rectangle rect = new Rectangle(80, 80);
@@ -44,7 +69,8 @@ public class Board {
                 this.getSquares().add(aSquare);
             }
         }
-        return gridLayout;
+        mainLayout.getChildren().addAll(mainMenu, gridLayout);
+        return mainLayout;
     }
 
     //for event listener on all the squares on the board
@@ -76,14 +102,17 @@ public class Board {
                 allowedMoveBasedOnLastMove.getMoves().forEach((System.out::println));
                 //set new square with previous square's piece
                 clickedSquare.setSquareWith(this.moveHistory.getPiece());
-
-                //set previous square color
-                this.moveHistory.getMoves().getLast().setFill(Color.BLUE);
+                //clear the image before setting new text
+                this.moveHistory.getMoves().getLast().setGraphic(null);
+                //get the index of last square
+                int aNumber = this.moveHistory.getMoves().indexOf(this.moveHistory.getMoves().getLast());
+                //set previous square text
+                this.moveHistory.getMoves().getLast().setText(Integer.toString(aNumber));
                 //add the square which is newly set to the moveHistory
                 this.moveHistory.getMoves().add(clickedSquare);
                 //update position for newly set piece
                 this.moveHistory.getMoves().getLast().getPiece().setPosition(clickedSquare);
-                //calculate and set possible move for the piece inside new quare, prepare for next move
+                //calculate and set possible move for the piece inside new square, prepare for next move
                 this.moveHistory.getMoves().getLast().getPiece().calculatePossibleMoves(this);
                 this.moveHistory.getMoves().getLast().getPiece().getPossibleMove().getMoves().forEach(System.out::println);
             }
@@ -96,9 +125,8 @@ public class Board {
         return squares;
     }
 
-
     public Square getSquareByXAndY(int x, int y) {
-        List<Square> aSquare = this.getSquares().stream().filter(current -> (current.get_X() == x && current.get_Y() == y)).collect(Collectors.toList());
+        List<Square> aSquare = this.getSquares().stream().filter(current -> (current.getX() == x && current.getY() == y)).collect(Collectors.toList());
         return aSquare.get(0);
     }
 

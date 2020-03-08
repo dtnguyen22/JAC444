@@ -2,37 +2,37 @@ package Chess;
 
 
 import javafx.event.Event;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class Square extends Rectangle {
+public class Square extends Label {
     private int x;
     private int y;
     private Piece piece;
 
     public Square(int x, int y) {
-        super(80, 80, Color.TRANSPARENT);
+        this.setAlignment(Pos.CENTER); //for text and image alignment
+        this.setFont(Font.font(48));
+        this.setMinWidth(80);
+        this.setMinHeight(80);
         this.x = x;
         this.y = y;
     }
 
-//    public boolean generatePiece(Square aSquare){
-//        int pos = this.squares.indexOf(aSquare);
-//        this.squares.get(pos).setFill(Color.RED);
-//        return true;
-//    }
-
-    public int get_X() {
+    public int getX() {
         return x;
     }
 
-    public int get_Y() {
+    public int getY() {
         return y;
     }
 
@@ -54,7 +54,8 @@ public class Square extends Rectangle {
             this.setPiece(aPiece);
             try (FileInputStream fis = new FileInputStream(aPiece.PIC_URL)) {
                 Image img = new Image(fis);
-                this.setFill(new ImagePattern(img));
+                this.setGraphic(new ImageView(img));
+
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
