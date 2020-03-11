@@ -110,7 +110,7 @@ public class Board {
             });
         }
         //        coming to this point, move history should have at least 1 piece
-//         if that piece doesn't have any moves, it means knight tour ends here.
+        //        if that piece doesn't have any moves, it means knight tour ends here.
     }
 
     public void popupMessage() {
@@ -131,38 +131,39 @@ public class Board {
             });
             this.moveHistory = null;
             this.aSquareIsClicked(sq);
-            this.findKnightTour();
-            if(this.getMoveHistory().getMoves().size() == 64){
+            if(this.findKnightTour()){
                 count++;
             }
         }
         System.out.printf("We have %s Knight FULL tour", count);
     }
 
-    public void findKnightTour() {
+    public boolean findKnightTour() {
         List<Square> possibleMoves;
-        Square tmp;
+        Square highestPrioritySquare;
         Comparator<Square> squareComparator = new Comparator<Square>() {
             @Override
             public int compare(Square square, Square t1) {
                 return square.compareTo(t1);
             }
         };
-        while (!this.moveHistory.getMoves().getLast().getPiece().getPossibleMove().getMoves().isEmpty()) {
+        while (!this.getMoveHistory().getMoves().getLast().getPiece().getPossibleMove().getMoves().isEmpty()) {
+            //get possible move for the clicked Square
             possibleMoves = this.getMoveHistory().getMoves().getLast().getPiece().getPossibleMove().getMoves();
-            tmp = Collections.min(possibleMoves, squareComparator);
-            if (tmp != null) {
-                this.aSquareIsClicked(tmp);
+            //find the one that has highest priority
+            highestPrioritySquare = Collections.min(possibleMoves, squareComparator);
+            if(highestPrioritySquare != null){
+                this.aSquareIsClicked(highestPrioritySquare);
             }
         }
-        for (int y = 0; y < 8; y++) {
-            for (int x = 0; x < 8; x++) {
-                System.out.printf("%2s ", this.moveHistory.getMoves().indexOf(this.getSquareByXAndY(x, y)));
-            }
-            System.out.print('\n');
-        }
-        System.out.print('\n');
-
+//        for (int y = 0; y < 8; y++) {
+//            for (int x = 0; x < 8; x++) {
+//                System.out.printf("%2s ", this.moveHistory.getMoves().indexOf(this.getSquareByXAndY(x, y)));
+//            }
+//            System.out.print('\n');
+//        }
+//        System.out.print('\n');
+        return this.getMoveHistory().getMoves().size() == 64;
     }
 
     public List<Square> getSquares() {
