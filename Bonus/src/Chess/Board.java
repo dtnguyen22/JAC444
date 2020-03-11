@@ -26,7 +26,6 @@ public class Board {
     public GridPane initialize() {
         GridPane gridLayout = new GridPane();
         /*--------------------------------------------menu bar*/
-
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 Rectangle rect = new Rectangle(80, 80);
@@ -58,7 +57,6 @@ public class Board {
     public void aSquareIsClicked(Square clickedSquare) {
         if (this.moveHistory == null) {
             System.out.println("move history == null!");
-
             Knight aKnight = new Knight(clickedSquare);
             clickedSquare.setSquareWith(aKnight);
             //calculate and set possible move for the piece inside that square
@@ -70,30 +68,33 @@ public class Board {
             //get allowed moves based on last move
             Move allowedMoveBasedOnLastMove = this.moveHistory.getMoves().getLast().getPiece().getPossibleMove();
             //next move is not in allowed move
-            if(clickedSquare == this.moveHistory.getMoves().getLast()){
+            if (clickedSquare == this.moveHistory.getMoves().getLast()) {
                 System.out.println("Illegal move - do not make a move on previous position");
                 return;
             }
+            //next move has to be in the list of possibleMoves which is calculated above
             if (!allowedMoveBasedOnLastMove.getMoves().contains(clickedSquare)) {
                 System.out.println("Illegal move for a knight");
-            }else {
+            } else {
+                // and next move has to be an unvisited square
                 // allowedMoveBaseOnLastMove - allTheMovesWereMade = next allowed move
                 allowedMoveBasedOnLastMove.getMoves().removeAll(this.moveHistory.getMoves());
-                allowedMoveBasedOnLastMove.getMoves().forEach((System.out::println));
+                allowedMoveBasedOnLastMove.getMoves().forEach((System.out::println));//debug purpose
                 //set new square with previous square's piece
                 clickedSquare.setSquareWith(this.moveHistory.getPiece());
                 //clear the image before setting new text
                 this.moveHistory.getMoves().getLast().setGraphic(null);
                 //get the index of last square
-                int aNumber = this.moveHistory.getMoves().indexOf(this.moveHistory.getMoves().getLast());
+                int aNumber = this.moveHistory.getMoves().indexOf(this.moveHistory.getMoves().getLast()) + 1;
                 //set previous square text
                 this.moveHistory.getMoves().getLast().setText(Integer.toString(aNumber));
-                //add the square which is newly set to the moveHistory
+                //add the clickedSquare to the moveHistory
                 this.moveHistory.getMoves().add(clickedSquare);
                 //update position for newly set piece
                 this.moveHistory.getMoves().getLast().getPiece().setPosition(clickedSquare);
-                //calculate and set possible move for the piece inside new square, prepare for next move
+                //calculate and set possibleMoves for the piece inside clickedSquare, prepare for next move
                 this.moveHistory.getMoves().getLast().getPiece().calculatePossibleMoves(this);
+                //printing out, debug purpose
                 this.moveHistory.getMoves().getLast().getPiece().getPossibleMove().getMoves().forEach(System.out::println);
             }
         }
