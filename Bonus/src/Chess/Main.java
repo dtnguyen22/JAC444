@@ -78,7 +78,6 @@ public class Main extends Application {
             aBoard = new Board();
             boardLayout = aBoard.initialize();
             mainLayout.getChildren().add(boardLayout);
-            System.out.println(aBoard);
         });
         MenuItem menuItem2 = new MenuItem("Find knight tour");
         menuItem2.setOnAction(event -> {

@@ -111,9 +111,6 @@ public class Board {
         }
         //        coming to this point, move history should have at least 1 piece
 //         if that piece doesn't have any moves, it means knight tour ends here.
-        if (this.moveHistory.getPiece().getPossibleMove().getMoves().isEmpty()) {
-            this.popupMessage();
-        }
     }
 
     public void popupMessage() {
@@ -125,26 +122,26 @@ public class Board {
     }
 
     public void find64KnightTour() {
-        this.getSquares().forEach(aSquare -> {
-            this.aSquareIsClicked(aSquare);
+        int count = 0;
+        for(Square sq: this.getSquares()){
+            //clean all the squares
+            this.getSquares().forEach(aSquare -> {
+                aSquare.setPiece(null);
+                aSquare.setText(null);
+            });
+            this.moveHistory = null;
+            this.aSquareIsClicked(sq);
             this.findKnightTour();
-            if (this.moveHistory.getMoves().size() == 64) {
-                System.out.println(aSquare);
+            if(this.getMoveHistory().getMoves().size() == 64){
+                count++;
             }
-        });
+        }
+        System.out.printf("We have %s Knight FULL tour", count);
     }
 
     public void findKnightTour() {
         List<Square> possibleMoves;
-        double[][] squareRate = {{2, 3, 4, 4, 4, 4, 3, 2},
-                {3, 5, 6, 6, 6, 6, 5, 3},
-                {4, 6, 7, 8, 8, 7, 6, 4},
-                {4, 6, 8, 9, 9, 8, 6, 4},
-                {4, 6, 8, 9, 9, 8, 6, 4},
-                {4, 6, 7, 8, 8, 7, 6, 4},
-                {3, 5, 6, 6, 6, 6, 5, 3},
-                {2, 3, 4, 4, 4, 4, 3, 2}};
-
+        Square tmp;
         Comparator<Square> squareComparator = new Comparator<Square>() {
             @Override
             public int compare(Square square, Square t1) {
@@ -153,7 +150,7 @@ public class Board {
         };
         while (!this.moveHistory.getMoves().getLast().getPiece().getPossibleMove().getMoves().isEmpty()) {
             possibleMoves = this.getMoveHistory().getMoves().getLast().getPiece().getPossibleMove().getMoves();
-            Square tmp = Collections.min(possibleMoves, squareComparator);
+            tmp = Collections.min(possibleMoves, squareComparator);
             if (tmp != null) {
                 this.aSquareIsClicked(tmp);
             }
@@ -164,6 +161,8 @@ public class Board {
             }
             System.out.print('\n');
         }
+        System.out.print('\n');
+
     }
 
     public List<Square> getSquares() {

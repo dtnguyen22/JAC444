@@ -76,14 +76,14 @@ public class Square extends Label implements Comparable<Square> {
 
     @Override
     public int compareTo(Square otherSquare) {
-        double[][] squarePriority = {{2, 3, 4, 4, 4, 4, 3, 2},
-                {3, 5, 6, 6, 6, 6, 5, 3},
-                {4, 6, 7, 8, 8, 7, 6, 4},
-                {4, 6, 8, 9, 9, 8, 6, 4},
-                {4, 6, 8, 9, 9, 8, 6, 4},
-                {4, 6, 7, 8, 8, 7, 6, 4},
-                {3, 5, 6, 6, 6, 6, 5, 3},
-                {2, 3, 4, 4, 4, 4, 3, 2}};
+        int[][] squarePriority =   {{2, 3, 4, 4, 4, 4, 3, 2},
+                                    {3, 5, 6, 6, 6, 6, 5, 3},
+                                    {4, 6, 7, 8, 8, 7, 6, 4},
+                                    {4, 6, 8, 9, 9, 8, 6, 4},
+                                    {4, 6, 8, 9, 9, 8, 6, 4},
+                                    {4, 6, 7, 8, 8, 7, 6, 4},
+                                    {3, 5, 6, 6, 6, 6, 5, 3},
+                                    {2, 3, 4, 4, 4, 4, 3, 2}};
         if (squarePriority[this.getX()][this.getY()] == squarePriority[otherSquare.getX()][otherSquare.getY()]) {
             return 0;
         } else {
