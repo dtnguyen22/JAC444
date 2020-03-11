@@ -9,10 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -58,7 +55,6 @@ public class Board {
     //if it there is no move in moveHistory, set aSquare with a piece
     public void aSquareIsClicked(Square clickedSquare) {
         if (this.moveHistory == null) {
-            System.out.println("move history == null!");
             Knight aKnight = new Knight(clickedSquare);
             clickedSquare.setSquareWith(aKnight);
             //calculate and set possible move for the piece inside that square
@@ -82,7 +78,7 @@ public class Board {
                 // and next move has to be an unvisited square
                 // allowedMoveBaseOnLastMove - allTheMovesWereMade = next allowed move
                 allowedMoveBasedOnLastMove.getMoves().removeAll(this.moveHistory.getMoves());
-                allowedMoveBasedOnLastMove.getMoves().forEach((System.out::println));//debug purpose
+//                allowedMoveBasedOnLastMove.getMoves().forEach((System.out::println));//debug purpose
                 //set possible move square to BLUE
                 this.moveHistory.getPiece().getPossibleMove().getMoves().forEach(sq -> {
                     sq.setBackground(Background.EMPTY);
@@ -102,7 +98,7 @@ public class Board {
                 //calculate and set possibleMoves for the piece inside clickedSquare, prepare for next move
                 this.moveHistory.getMoves().getLast().getPiece().calculatePossibleMoves(this);
                 //printing out, debug purpose
-                this.moveHistory.getMoves().getLast().getPiece().getPossibleMove().getMoves().forEach(System.out::println);
+//                this.moveHistory.getMoves().getLast().getPiece().getPossibleMove().getMoves().forEach(System.out::println);
             }
         }
         //after aSquare is processed, there only two possibilities
@@ -113,60 +109,78 @@ public class Board {
                 sq.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
             });
         }
-        //coming to this point, move history should have at least 1 piece
-        // if that piece doesn't have any moves, it means knight tour ends here.
+        //        coming to this point, move history should have at least 1 piece
+//         if that piece doesn't have any moves, it means knight tour ends here.
         if (this.moveHistory.getPiece().getPossibleMove().getMoves().isEmpty()) {
-            Alert finishAlert = new Alert(Alert.AlertType.INFORMATION);
-            finishAlert.setTitle("Knight tour ends!");
-            finishAlert.setContentText("Knight tour ends with " + this.moveHistory.getMoves().size() + " moves");
-            finishAlert.setHeaderText(null);
-            finishAlert.showAndWait();
+            this.popupMessage();
         }
+    }
 
+    public void popupMessage() {
+        Alert finishAlert = new Alert(Alert.AlertType.INFORMATION);
+        finishAlert.setTitle("Knight tour ends!");
+        finishAlert.setContentText("Knight tour ends with " + this.moveHistory.getMoves().size() + " moves");
+        finishAlert.setHeaderText(null);
+        finishAlert.showAndWait();
+    }
+
+    public void find64KnightTour() {
+        this.getSquares().forEach(aSquare -> {
+            this.aSquareIsClicked(aSquare);
+            this.findKnightTour();
+            if (this.moveHistory.getMoves().size() == 64) {
+                System.out.println(aSquare);
+            }
+        });
     }
 
     public void findKnightTour() {
         List<Square> possibleMoves;
-        double[][] squareRate ={{2, 3, 4, 4, 4, 4, 3, 2},
-                                {3, 5, 6, 6, 6, 6, 5, 3},
-                                {4, 6, 7, 8, 8, 7, 6, 4},
-                                {4, 6, 8, 8, 8, 8, 6, 4},
-                                {4, 6, 8, 8, 8, 8, 6, 4},
-                                {4, 6, 7, 8, 8, 7, 6, 4},
-                                {3, 5, 6, 6, 6, 6, 5, 3},
-                                {2, 3, 4, 4, 4, 4, 3, 2}};
-//        while(this.moveHistory.getMoves().getLast().getPiece().getPossibleMove() != null){
-//
-//        }
-        Comparator<Square> squareComparator = (Square sq1, Square sq2)->{
-            if(squareRate[sq1.getX()][sq1.getY()] ==  squareRate[sq2.getX()][sq2.getY()]){
-                return 1;
-            }else{
-                return squareRate[sq1.getX()][sq1.getY()] <  squareRate[sq2.getX()][sq2.getY()] ? -1 : 1;
+        double[][] squareRate = {{2, 3, 4, 4, 4, 4, 3, 2},
+                {3, 5, 6, 6, 6, 6, 5, 3},
+                {4, 6, 7, 8, 8, 7, 6, 4},
+                {4, 6, 8, 9, 9, 8, 6, 4},
+                {4, 6, 8, 9, 9, 8, 6, 4},
+                {4, 6, 7, 8, 8, 7, 6, 4},
+                {3, 5, 6, 6, 6, 6, 5, 3},
+                {2, 3, 4, 4, 4, 4, 3, 2}};
+
+        Comparator<Square> squareComparator = new Comparator<Square>() {
+            @Override
+            public int compare(Square square, Square t1) {
+                return square.compareTo(t1);
             }
         };
-        while(this.moveHistory.getMoves().getLast().getPiece().getPossibleMove().getMoves() != null){
+        while (!this.moveHistory.getMoves().getLast().getPiece().getPossibleMove().getMoves().isEmpty()) {
             possibleMoves = this.getMoveHistory().getMoves().getLast().getPiece().getPossibleMove().getMoves();
             Square tmp = Collections.min(possibleMoves, squareComparator);
-            this.aSquareIsClicked(tmp);
+            if (tmp != null) {
+                this.aSquareIsClicked(tmp);
+            }
+        }
+        for (int y = 0; y < 8; y++) {
+            for (int x = 0; x < 8; x++) {
+                System.out.printf("%2s ", this.moveHistory.getMoves().indexOf(this.getSquareByXAndY(x, y)));
+            }
+            System.out.print('\n');
         }
     }
 
-        public List<Square> getSquares () {
-            return squares;
-        }
-
-        public Move getMoveHistory () {
-            return moveHistory;
-        }
-
-        public Square getSquareByXAndY ( int x, int y){
-            List<Square> aSquare = this.getSquares().stream().filter(current -> (current.getX() == x && current.getY() == y)).collect(Collectors.toList());
-            return aSquare.get(0);
-        }
-
-        public boolean isOccupied (Square aSquare){
-            return aSquare.getPiece() != null;
-        }
-
+    public List<Square> getSquares() {
+        return squares;
     }
+
+    public Move getMoveHistory() {
+        return moveHistory;
+    }
+
+    public Square getSquareByXAndY(int x, int y) {
+        List<Square> aSquare = this.getSquares().stream().filter(current -> (current.getX() == x && current.getY() == y)).collect(Collectors.toList());
+        return aSquare.get(0);
+    }
+
+    public boolean isOccupied(Square aSquare) {
+        return aSquare.getPiece() != null;
+    }
+
+}

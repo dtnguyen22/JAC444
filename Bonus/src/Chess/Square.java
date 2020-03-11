@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class Square extends Label {
+public class Square extends Label implements Comparable<Square> {
     private int x;
     private int y;
     private Piece piece;
@@ -50,7 +50,7 @@ public class Square extends Label {
 
     public boolean setSquareWith(Piece aPiece) {
         if (!this.isOccupied()) {
-            System.out.println("set");
+//            System.out.println("set");
             this.setPiece(aPiece);
             try (FileInputStream fis = new FileInputStream(aPiece.PIC_URL)) {
                 Image img = new Image(fis);
@@ -60,8 +60,7 @@ public class Square extends Label {
                 ex.printStackTrace();
             }
             return true;
-        }else{
-            System.out.println("nope");
+        } else {
             return false;
         }
     }
@@ -75,4 +74,20 @@ public class Square extends Label {
     }
 
 
+    @Override
+    public int compareTo(Square otherSquare) {
+        double[][] squarePriority = {{2, 3, 4, 4, 4, 4, 3, 2},
+                {3, 5, 6, 6, 6, 6, 5, 3},
+                {4, 6, 7, 8, 8, 7, 6, 4},
+                {4, 6, 8, 9, 9, 8, 6, 4},
+                {4, 6, 8, 9, 9, 8, 6, 4},
+                {4, 6, 7, 8, 8, 7, 6, 4},
+                {3, 5, 6, 6, 6, 6, 5, 3},
+                {2, 3, 4, 4, 4, 4, 3, 2}};
+        if (squarePriority[this.getX()][this.getY()] == squarePriority[otherSquare.getX()][otherSquare.getY()]) {
+            return 0;
+        } else {
+            return squarePriority[this.getX()][this.getY()] > squarePriority[otherSquare.getX()][otherSquare.getY()] ? 1 : -1;
+        }
+    }
 }

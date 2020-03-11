@@ -90,14 +90,17 @@ public class Main extends Application {
         });
         firstMenu.getItems().addAll(menuItem1, menuItem2);
         //second menu
-        Menu secondMenu = new Menu("Select Piece");
-        RadioMenuItem radKnight = new RadioMenuItem("Knight");
-        RadioMenuItem radRook = new RadioMenuItem("Rook");
-        ToggleGroup toggleGroup = new ToggleGroup();
-        toggleGroup.getToggles().add(radKnight);
-        toggleGroup.getToggles().add(radRook);
-        secondMenu.getItems().add(radKnight);
-        secondMenu.getItems().add(radRook);
+        Menu secondMenu = new Menu("Auto");
+        //first menu
+        MenuItem menu2Item1 = new MenuItem("Find 64 tours");
+        menu2Item1.setOnAction(event -> {
+            mainLayout.getChildren().remove(boardLayout);
+            aBoard = new Board();
+            boardLayout = aBoard.initialize();
+            mainLayout.getChildren().add(boardLayout);
+            aBoard.find64KnightTour();
+        });
+        secondMenu.getItems().addAll(menu2Item1);
         //add 2 to main menu
         mainMenu.getMenus().add(firstMenu);
         mainMenu.getMenus().add(secondMenu);
