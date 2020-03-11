@@ -1,10 +1,10 @@
 package Chess;
 
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -61,6 +61,7 @@ public class Board {
             clickedSquare.setSquareWith(aKnight);
             //calculate and set possible move for the piece inside that square
             clickedSquare.getPiece().calculatePossibleMoves(this);
+
             //create move history and add the first move into it
             this.moveHistory = new Move(aKnight);
             this.moveHistory.getMoves().add(clickedSquare);
@@ -80,6 +81,10 @@ public class Board {
                 // allowedMoveBaseOnLastMove - allTheMovesWereMade = next allowed move
                 allowedMoveBasedOnLastMove.getMoves().removeAll(this.moveHistory.getMoves());
                 allowedMoveBasedOnLastMove.getMoves().forEach((System.out::println));//debug purpose
+                //set possible move square to BLUE
+                this.moveHistory.getPiece().getPossibleMove().getMoves().forEach(sq->{
+                    sq.setBackground(Background.EMPTY);
+                });
                 //set new square with previous square's piece
                 clickedSquare.setSquareWith(this.moveHistory.getPiece());
                 //clear the image before setting new text
@@ -98,7 +103,24 @@ public class Board {
                 this.moveHistory.getMoves().getLast().getPiece().getPossibleMove().getMoves().forEach(System.out::println);
             }
         }
-        //after everything is done add the square to history move
+        //after aSquare is processed, there only two possibilities
+        //either clicked square becomes occupied or still !occupied
+        //if it is occupied, that means the process above goes inside ELSE statement and a square is set with a piece.
+        if(clickedSquare.isOccupied()){
+            clickedSquare.getPiece().getPossibleMove().getMoves().forEach(sq->{
+                sq.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+            });
+        }
+        //coming to this point, move history should have at least 1 piece
+        // if that piece doesn't have any moves, it means knight tour ends here.
+        if(this.moveHistory.getPiece().getPossibleMove().getMoves().isEmpty()){
+            Alert finishAlert = new Alert(Alert.AlertType.INFORMATION);
+            finishAlert.setTitle("Knight tour ends!");
+            finishAlert.setContentText("Knight tour ends with "+ this.moveHistory.getMoves().size() + " moves");
+            finishAlert.setHeaderText(null);
+            finishAlert.showAndWait();
+        }
+
     }
 
 
