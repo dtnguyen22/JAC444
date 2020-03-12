@@ -141,14 +141,14 @@ public class Board {
     public boolean findKnightTour() {
         List<Square> possibleMoves;
         Square highestPrioritySquare;
-        int[][] squarePriority =   {{2, 3, 4, 4, 4, 4, 3, 2},
-                                    {3, 4, 6, 6, 6, 6, 4, 3},
-                                    {4, 6, 8, 8, 8, 8, 6, 4},
-                                    {4, 6, 8, 8, 8, 8, 6, 4},
-                                    {4, 6, 8, 8, 8, 8, 6, 4},
-                                    {4, 6, 8, 8, 8, 8, 6, 4},
-                                    {3, 4, 6, 6, 6, 6, 4, 3},
-                                    {2, 3, 4, 4, 4, 4, 3, 2}};
+        int[][] squarePriority = {{2, 3, 4, 4, 4, 4, 3, 2},
+                {3, 4, 6, 6, 6, 6, 4, 3},
+                {4, 6, 8, 8, 8, 8, 6, 4},
+                {4, 6, 8, 8, 8, 8, 6, 4},
+                {4, 6, 8, 8, 8, 8, 6, 4},
+                {4, 6, 8, 8, 8, 8, 6, 4},
+                {3, 4, 6, 6, 6, 6, 4, 3},
+                {2, 3, 4, 4, 4, 4, 3, 2}};
 
         Comparator<Square> squareComparator = new Comparator<Square>() {
             @Override
@@ -165,6 +165,33 @@ public class Board {
             possibleMoves = this.getMoveHistory().getMoves().getLast().getPiece().getPossibleMove().getMoves();
             //find the one that has highest priority
             highestPrioritySquare = Collections.min(possibleMoves, squareComparator);
+            Set<Square> duplicateRateSquareList = new HashSet<>();
+            for (Square aSquare : possibleMoves) {
+                if (squarePriority[aSquare.getX()][aSquare.getY()] == squarePriority[highestPrioritySquare.getX()][highestPrioritySquare.getY()]) {
+                    duplicateRateSquareList.add(aSquare);
+                }
+            }
+            //if there are several possible moves with the same rate, the one in outside layer has higher priority
+            for (Square aSquare : duplicateRateSquareList) {
+                if (aSquare.getX() < 3 && highestPrioritySquare.getX() < 3) {
+                    if (aSquare.getX() < highestPrioritySquare.getX()) {
+                        highestPrioritySquare = aSquare;
+                    }
+                } else if (aSquare.getX() > 3 && highestPrioritySquare.getX() > 3) {
+                    if (aSquare.getX() > highestPrioritySquare.getX()) {
+                        highestPrioritySquare = aSquare;
+                    }
+                }
+                if (aSquare.getY() < 3 && highestPrioritySquare.getY() < 3) {
+                    if (aSquare.getY() < highestPrioritySquare.getY()) {
+                        highestPrioritySquare = aSquare;
+                    }
+                } else if (aSquare.getY() > 3 && highestPrioritySquare.getY() > 3) {
+                    if (aSquare.getY() > highestPrioritySquare.getY()) {
+                        highestPrioritySquare = aSquare;
+                    }
+                }
+            }
             if (highestPrioritySquare != null) {
                 this.aSquareIsClicked(highestPrioritySquare);
                 updateSquarePriority(squarePriority, possibleMoves);
@@ -176,11 +203,11 @@ public class Board {
             }
             System.out.print('\n');
         }
-        if(this.getMoveHistory().getMoves().size() == 64){
-            System.out.println("This is a full tour start at "+ this.moveHistory.getMoves().getFirst());
+        if (this.getMoveHistory().getMoves().size() == 64) {
+            System.out.println("This is a full tour start at " + this.moveHistory.getMoves().getFirst());
             System.out.print('\n');
             return true;
-        }else{
+        } else {
             System.out.print('\n');
             return false;
         }
