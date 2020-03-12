@@ -141,14 +141,14 @@ public class Board {
     public boolean findKnightTour() {
         List<Square> possibleMoves;
         Square highestPrioritySquare;
-        int[][] squarePriority = {{2, 3, 4, 4, 4, 4, 3, 2},
-                {3, 4, 6, 6, 6, 6, 4, 3},
-                {4, 6, 8, 8, 8, 8, 6, 4},
-                {4, 6, 8, 8, 8, 8, 6, 4},
-                {4, 6, 8, 8, 8, 8, 6, 4},
-                {4, 6, 8, 8, 8, 8, 6, 4},
-                {3, 4, 6, 6, 6, 6, 4, 3},
-                {2, 3, 4, 4, 4, 4, 3, 2}};
+        int[][] squarePriority =   {{2, 3, 4, 4, 4, 4, 3, 2},
+                                    {3, 4, 6, 6, 6, 6, 4, 3},
+                                    {4, 6, 8, 8, 8, 8, 6, 4},
+                                    {4, 6, 8, 8, 8, 8, 6, 4},
+                                    {4, 6, 8, 8, 8, 8, 6, 4},
+                                    {4, 6, 8, 8, 8, 8, 6, 4},
+                                    {3, 4, 6, 6, 6, 6, 4, 3},
+                                    {2, 3, 4, 4, 4, 4, 3, 2}};
 
         Comparator<Square> squareComparator = new Comparator<Square>() {
             @Override
@@ -176,13 +176,15 @@ public class Board {
             }
             System.out.print('\n');
         }
-        System.out.print('\n');
         if(this.getMoveHistory().getMoves().size() == 64){
-            System.out.println("This is a full tour start at"+ this.moveHistory.getMoves().getFirst());
+            System.out.println("This is a full tour start at "+ this.moveHistory.getMoves().getFirst());
+            System.out.print('\n');
             return true;
         }else{
+            System.out.print('\n');
             return false;
         }
+
     }
 
     public void updateSquarePriority(int[][] squarePriorityArray, List<Square> nextPossibleMoveList) {
