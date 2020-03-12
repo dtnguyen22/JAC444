@@ -80,7 +80,7 @@ public class Board {
                 allowedMoveBasedOnLastMove.getMoves().removeAll(this.moveHistory.getMoves());
 //                allowedMoveBasedOnLastMove.getMoves().forEach((System.out::println));//debug purpose
                 //set possible move square to BLUE
-                this.moveHistory.getPiece().getPossibleMove().getMoves().forEach(sq -> {
+                this.getSquares().forEach(sq -> {
                     sq.setBackground(Background.EMPTY);
                 });
                 //set new square with previous square's piece
@@ -121,6 +121,16 @@ public class Board {
         finishAlert.showAndWait();
     }
 
+    public void findKnightTourRandomInitialSquare(){
+        Random random = new Random();
+        int initialX = random.nextInt(16777216) % 8;
+        int initialY = random.nextInt(16777216) % 8;
+        Knight aKnight = new Knight(this.getSquareByXAndY(initialX, initialY));
+        this.getSquareByXAndY(initialX, initialY).setSquareWith(aKnight);
+        this.aSquareIsClicked(this.getSquareByXAndY(initialX, initialY));
+        this.findKnightTour();
+    }
+
     public void find64KnightTour() {
         int count = 0;
         for (Square sq : this.getSquares()) {
@@ -141,14 +151,14 @@ public class Board {
     public boolean findKnightTour() {
         List<Square> possibleMoves;
         Square highestPrioritySquare;
-        int[][] squarePriority = {{2, 3, 4, 4, 4, 4, 3, 2},
-                {3, 4, 6, 6, 6, 6, 4, 3},
-                {4, 6, 8, 8, 8, 8, 6, 4},
-                {4, 6, 8, 8, 8, 8, 6, 4},
-                {4, 6, 8, 8, 8, 8, 6, 4},
-                {4, 6, 8, 8, 8, 8, 6, 4},
-                {3, 4, 6, 6, 6, 6, 4, 3},
-                {2, 3, 4, 4, 4, 4, 3, 2}};
+        int[][] squarePriority =   {{2, 3, 4, 4, 4, 4, 3, 2},
+                                    {3, 4, 6, 6, 6, 6, 4, 3},
+                                    {4, 6, 8, 8, 8, 8, 6, 4},
+                                    {4, 6, 8, 8, 8, 8, 6, 4},
+                                    {4, 6, 8, 8, 8, 8, 6, 4},
+                                    {4, 6, 8, 8, 8, 8, 6, 4},
+                                    {3, 4, 6, 6, 6, 6, 4, 3},
+                                    {2, 3, 4, 4, 4, 4, 3, 2}};
 
         Comparator<Square> squareComparator = new Comparator<Square>() {
             @Override
@@ -211,7 +221,6 @@ public class Board {
             System.out.print('\n');
             return false;
         }
-
     }
 
     public void updateSquarePriority(int[][] squarePriorityArray, List<Square> nextPossibleMoveList) {

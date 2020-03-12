@@ -82,7 +82,15 @@ public class Main extends Application {
             mainLayout.getChildren().add(boardLayout);
             aBoard.find64KnightTour();
         });
-        secondMenu.getItems().addAll(menu2Item1);
+        MenuItem menu2Item2 = new MenuItem("Random initial location");
+        menu2Item2.setOnAction(event -> {
+            mainLayout.getChildren().remove(boardLayout);
+            aBoard = new Board();
+            boardLayout = aBoard.initialize();
+            mainLayout.getChildren().add(boardLayout);
+            aBoard.findKnightTourRandomInitialSquare();
+        });
+        secondMenu.getItems().addAll(menu2Item1, menu2Item2);
         //add 2 to main menu
         mainMenu.getMenus().add(firstMenu);
         mainMenu.getMenus().add(secondMenu);
