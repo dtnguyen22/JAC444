@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class Square extends Label implements Comparable<Square> {
+public class Square extends Label {
     private int x;
     private int y;
     private Piece piece;
@@ -74,20 +74,4 @@ public class Square extends Label implements Comparable<Square> {
     }
 
 
-    @Override
-    public int compareTo(Square otherSquare) {
-        int[][] squarePriority =   {{2, 3, 4, 4, 4, 4, 3, 2},
-                                    {3, 5, 6, 6, 6, 6, 5, 3},
-                                    {4, 6, 7, 8, 8, 7, 6, 4},
-                                    {4, 6, 8, 8, 8, 8, 6, 4},
-                                    {4, 6, 8, 8, 8, 8, 6, 4},
-                                    {4, 6, 7, 8, 8, 7, 6, 4},
-                                    {3, 5, 6, 6, 6, 6, 5, 3},
-                                    {2, 3, 4, 4, 4, 4, 3, 2}};
-        if (squarePriority[this.getX()][this.getY()] == squarePriority[otherSquare.getX()][otherSquare.getY()]) {
-            return 0;
-        } else {
-            return squarePriority[this.getX()][this.getY()] > squarePriority[otherSquare.getX()][otherSquare.getY()] ? 1 : -1;
-        }
-    }
 }
