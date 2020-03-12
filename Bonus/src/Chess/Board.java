@@ -123,7 +123,7 @@ public class Board {
 
     public void find64KnightTour() {
         int count = 0;
-        for(Square sq: this.getSquares()){
+        for (Square sq : this.getSquares()) {
             //clean all the squares
             this.getSquares().forEach(aSquare -> {
                 aSquare.setPiece(null);
@@ -131,7 +131,7 @@ public class Board {
             });
             this.moveHistory = null;
             this.aSquareIsClicked(sq);
-            if(this.findKnightTour()){
+            if (this.findKnightTour()) {
                 count++;
             }
         }
@@ -141,14 +141,14 @@ public class Board {
     public boolean findKnightTour() {
         List<Square> possibleMoves;
         Square highestPrioritySquare;
-        int[][] squarePriority =   {{2, 3, 4, 4, 4, 4, 3, 2},
-                                    {3, 5, 6, 6, 6, 6, 5, 3},
-                                    {4, 6, 7, 8, 8, 7, 6, 4},
-                                    {4, 6, 8, 8, 8, 8, 6, 4},
-                                    {4, 6, 8, 8, 8, 8, 6, 4},
-                                    {4, 6, 7, 8, 8, 7, 6, 4},
-                                    {3, 5, 6, 6, 6, 6, 5, 3},
-                                    {2, 3, 4, 4, 4, 4, 3, 2}};
+        int[][] squarePriority = {{2, 3, 4, 4, 4, 4, 3, 2},
+                {3, 4, 6, 6, 6, 6, 4, 3},
+                {4, 6, 8, 8, 8, 8, 6, 4},
+                {4, 6, 8, 8, 8, 8, 6, 4},
+                {4, 6, 8, 8, 8, 8, 6, 4},
+                {4, 6, 8, 8, 8, 8, 6, 4},
+                {3, 4, 6, 6, 6, 6, 4, 3},
+                {2, 3, 4, 4, 4, 4, 3, 2}};
 
         Comparator<Square> squareComparator = new Comparator<Square>() {
             @Override
@@ -165,30 +165,9 @@ public class Board {
             possibleMoves = this.getMoveHistory().getMoves().getLast().getPiece().getPossibleMove().getMoves();
             //find the one that has highest priority
             highestPrioritySquare = Collections.min(possibleMoves, squareComparator);
-//            Square tmpNextMove = highestPrioritySquare;
-//            Set<Square> possibleNextMoveList = new HashSet<>();
-//            //create a list that has the same rate/priority as the highest one
-//            for (Square aSquare : possibleMoves){
-//                if (squarePriority[aSquare.getX()][aSquare.getY()] == squarePriority[tmpNextMove.getX()][tmpNextMove.getY()]){
-//                    possibleNextMoveList.add(aSquare);
-//                }
-//            }
-//            int rate = 8;
-//            if(possibleNextMoveList.size() > 1){
-//                for (Square aSquare : possibleNextMoveList){
-//                    aSquare.setPiece(new Knight(aSquare));
-//                    aSquare.getPiece().calculatePossibleMoves(this);
-//                    Square tmp = this.getHighestPrioritySquareFromPossibleMove(aSquare.getPiece().getPossibleMove());
-//                    if(tmp != null && squarePriority[tmp.getX()][tmp.getY()] <= rate){
-//                        tmpNextMove = aSquare;
-//                        rate = squarePriority[tmp.getX()][tmp.getY()];
-//                    }
-//                    aSquare.setPiece(null); //clean
-//                }
-//            }
-
-            if(highestPrioritySquare != null){
+            if (highestPrioritySquare != null) {
                 this.aSquareIsClicked(highestPrioritySquare);
+                updateSquarePriority(squarePriority, possibleMoves);
             }
         }
         for (int y = 0; y < 8; y++) {
@@ -198,28 +177,19 @@ public class Board {
             System.out.print('\n');
         }
         System.out.print('\n');
-        return this.getMoveHistory().getMoves().size() == 64;
+        if(this.getMoveHistory().getMoves().size() == 64){
+            System.out.println("This is a full tour start at"+ this.moveHistory.getMoves().getFirst());
+            return true;
+        }else{
+            return false;
+        }
     }
 
-//    public Square getHighestPrioritySquareFromPossibleMove(Move moveList){
-//        int[][] squarePriority =   {{2, 3, 4, 4, 4, 4, 3, 2},
-//                                    {3, 5, 6, 6, 6, 6, 5, 3},
-//                                    {4, 6, 7, 8, 8, 7, 6, 4},
-//                                    {4, 6, 8, 8, 8, 8, 6, 4},
-//                                    {4, 6, 8, 8, 8, 8, 6, 4},
-//                                    {4, 6, 7, 8, 8, 7, 6, 4},
-//                                    {3, 5, 6, 6, 6, 6, 5, 3},
-//                                    {2, 3, 4, 4, 4, 4, 3, 2}};
-//        Square tmp = null;
-//        int rate = 8;
-//        for(Square sqr: moveList.getMoves()){
-//            if(squarePriority[sqr.getX()][sqr.getY()] <= rate){
-//                rate = squarePriority[sqr.getX()][sqr.getY()];
-//                tmp = sqr;
-//            }
-//        }
-//        return tmp;
-//    }
+    public void updateSquarePriority(int[][] squarePriorityArray, List<Square> nextPossibleMoveList) {
+        for (Square aSquare : nextPossibleMoveList) {
+            squarePriorityArray[aSquare.getX()][aSquare.getY()]--;
+        }
+    }
 
     public List<Square> getSquares() {
         return squares;
