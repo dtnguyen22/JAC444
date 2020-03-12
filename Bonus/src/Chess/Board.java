@@ -218,6 +218,7 @@ public class Board {
             System.out.print('\n');
             return true;
         } else {
+            System.out.println("This tour ends with "+this.getMoveHistory().getMoves().size()+" moves start at " + this.moveHistory.getMoves().getFirst());
             System.out.print('\n');
             return false;
         }
