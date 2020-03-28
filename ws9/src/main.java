@@ -1,5 +1,4 @@
 import javafx.util.Pair;
-
 import java.util.*;
 
 public class main {
@@ -7,6 +6,8 @@ public class main {
         List<Pair<String, Double>> depositEntry = new ArrayList<>();
         depositEntry.add(new Pair<>("Dollar", 1.0));
         depositEntry.add(new Pair<>("Euros", 2.0));
+        depositEntry.add(new Pair<>("Dollar", 3.0));
+        depositEntry.add(new Pair<>("Dollar", 4.0));
         depositEntry.add(new Pair<>("Dollar", 3.0));
         depositEntry.add(new Pair<>("Dollar", 4.0));
         depositEntry.add(new Pair<>("Pounds", 3.0));
@@ -79,41 +80,41 @@ class Withdraw extends Thread {
 
 class BankAccount {
     private String currency = "";
-    private static double balance = 0; // has to be static
+    private  double balance = 0; // has to be static
     private boolean hasToDeposit = true;
     //at the beginning of the program execution, there is no money in your account
     //that's why hasToDeposit flag is on, which will trigger wait() inside while()
     //and it won't allow withdraw process to finish up until deposit process finished its job
 
-    public void setCurrency(String currency) {
+    private void setCurrency(String currency) {
         this.currency = currency;
     }
 
-    public String getCurrency() {
+    private String getCurrency() {
         return currency;
     }
 
-    private static double getBalance() {
+    private  double getBalance() {
         return balance;
     }
 
-    private static void updateBalance(double oBalance) {
-        balance += oBalance;
+    private  void setBalance(double oBalance) {
+        this.balance = oBalance;
     }
 
     synchronized public void deposit(String currency, double amount) {
-        while (!hasToDeposit) {
+        while (!this.hasToDeposit) {
             //the first process of all processes will never go here
             //program instruction will only go here if balance = 0
             try {
-                //if there are more than 1 deposit processes coming back to back, the very first one will go inside ELSE
+                //if a deposit process comes after another deposit process, the first one will go inside ELSE
                 //because at that point this.currency == ""
                 //the next one will go inside IF in which this.currency is already set to a value
                 //we only allow same currency deposit
                 if(!this.getCurrency().equals("") && !this.getCurrency().equals(currency)){
                     System.out.printf("%s - currency does not match, current: %s incoming: %s\n", Thread.currentThread().getName(), this.getCurrency(), currency);
-                }else{
-                    break;// break the while loop to update balance and set currency
+                }else{ //current balance == 0 || upcoming currency is the same as current one
+                    break;// break the while loop to update balance and set currency, don't need to wait()
                 }
                 wait();
             } catch (InterruptedException e) {
@@ -121,16 +122,16 @@ class BankAccount {
             }
         }
         //if the first process of all is deposit process, it will go right into here
-        updateBalance(amount);
+        this.setBalance(this.getBalance()+amount);
         this.setCurrency(currency);
         System.out.printf("%s: deposited %s %s \n",Thread.currentThread().getName(), amount, currency);
-        hasToDeposit = false;// done deposited, allows next deposit or withdraw process to execute
+        this.hasToDeposit = false;// done deposited, allows next deposit or withdraw process to execute
         notify();//tell other processes that shared bank account is ready to use
     }
 
-    synchronized void withdraw() {
+    synchronized public void withdraw() {
         //if hasToDeposit flag is on, it means you are not ready to withdraw
-        while (hasToDeposit) {
+        while (this.hasToDeposit) {
             try {
                 System.out.printf("%s - no money in your account, please wait for deposit\n", Thread.currentThread().getName());
                 wait();
@@ -139,11 +140,11 @@ class BankAccount {
             }
         }
         //program instruction reach to this point only if hasToDeposit = false
-        // which means there is at least 1 completed deposit process
-        System.out.printf("%s: withdrew %s %s \n", Thread.currentThread().getName(), getBalance(), this.getCurrency());
-        updateBalance(-getBalance());//balance goes zero
+        // which means there is at least 1 completed deposit process -> we have money to withdraw
+        System.out.printf("%s: withdrew %s %s \n", Thread.currentThread().getName(), this.getBalance(), this.getCurrency());
+        this.setBalance(0);//balance goes zero
         this.setCurrency(""); //currency goes blank
-        this.hasToDeposit = true; //after withdraw all money, balance = 0
-        notify();
+        this.hasToDeposit = true; //after withdraw all money
+        notify();                 //tell deposit process it is good to go
     }
 }
