@@ -80,7 +80,7 @@ class Withdraw extends Thread {
 
 class BankAccount {
     private String currency = "";
-    private  double balance = 0; // has to be static
+    private double balance = 0;
     private boolean hasToDeposit = true;
     //at the beginning of the program execution, there is no money in your account
     //that's why hasToDeposit flag is on, which will trigger wait() inside while()
