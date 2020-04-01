@@ -2,7 +2,7 @@ import javafx.util.Pair;
 
 import java.util.*;
 
-public class main {
+public class Workshop9 {
     public static void main(String[] args) {
         List<Pair<String, Double>> depositEntry = new ArrayList<>();
         depositEntry.add(new Pair<>("Dollar", 1.0));
