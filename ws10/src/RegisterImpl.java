@@ -8,9 +8,8 @@ public class RegisterImpl extends UnicastRemoteObject implements Register {
     }
 
     @Override
-    public Car register(Car aCar) throws RemoteException {
-        aCar.getRegistered(String.valueOf(aCar.hashCode()));
-        return aCar;
+    public String register(Car aCar) throws RemoteException {
+        return String.valueOf(aCar.hashCode());
     }
     //take a car object and generate plate number
 }
