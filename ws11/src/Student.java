@@ -4,21 +4,21 @@ public class Student {
     private int stdID;
     private String firstName;
     private String lastName;
-    private ArrayList<String> courses;
+    private String courseName;
 
     public Student(){
     }
 
-    public Student(int stdID, String firstName, String lastName, ArrayList<String> courses) {
+    public Student(int stdID, String firstName, String lastName, String courses) {
         this.stdID = stdID;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.courses = courses;
+        this.courseName = courses;
     }
 
     @Override
     public String toString(){
-        return String.format("Student: %s\n Name: %s %s\n Courses: %s", this.stdID, this.firstName, this.lastName, this.courses);
+        return String.format("Student: %s\n Name: %s %s\n Courses: %s", this.stdID, this.firstName, this.lastName, this.courseName);
     }
 
     public int getStdID() {
@@ -45,11 +45,11 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public ArrayList<String> getCourses() {
-        return courses;
+    public String getCourseName() {
+        return this.courseName;
     }
 
-    public void setCourses(ArrayList<String> courses) {
-        this.courses = courses;
+    public void setCourseName(String courses) {
+        this.courseName = courses;
     }
 }

@@ -2,31 +2,27 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.sql.Connection;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main extends Application {
-    Stage window;
+    Stage window, subWindow;
+    DatabaseConnector dbc = new DatabaseConnector();
+
+
     @Override
     public void start(Stage primaryStage) throws Exception{
+        dbc.initialize();
         window = primaryStage;
         window.setTitle("Student Management");
-        window.setMinWidth(300);
 
         //show student label and button
-        Label labelShow = new Label("Show student info");
+        Label labelShow = new Label("Show student from DB ");
         Button showStdButton = new Button("Show Student");
-        TextField fileNameInput = new TextField();
-        fileNameInput.setPromptText("File name");
 
         //add student labels and buttons
         Label labelAdd = new Label("Add new student");
@@ -39,25 +35,44 @@ public class Main extends Application {
         TextField stdIdInput = new TextField();
         TextField stdFNameInput = new TextField();
         TextField stdLNameInput = new TextField();
-        TextField stdFileName = new TextField();
-        stdFileName.setPromptText("Save to");
-        TextArea stdCoursesInput = new TextArea();
-        stdCoursesInput.setMaxWidth(200);
-        stdCoursesInput.setMaxHeight(80);
+        Label labelAddStd = new Label("Add student to DB");
+        TextField stdCoursesInput = new TextField();
 
         showStdButton.setOnAction(e->{
-            DatabaseConnector dbc = new DatabaseConnector();
-            dbc.initialize();
-            List<Student> alist = new ArrayList<>();
-            alist = dbc.getAllStudent();
-            alist.forEach(System.out::println);
+            List<Student> studentList;
+            studentList = dbc.getAllStudent();
+            TableView tableView = new TableView();
+            TableColumn<String, Student> column1 = new TableColumn<>("Student ID");
+            column1.setCellValueFactory(new PropertyValueFactory<>("stdID"));
+            TableColumn<String, Student> column2 = new TableColumn<>("First Name");
+            column2.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+            TableColumn<String, Student> column3 = new TableColumn<>("Last Name");
+            column3.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+            TableColumn<String, Student> column4 = new TableColumn<>("Course");
+            column4.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+            tableView.getColumns().addAll(column1,column2,column3,column4);
+            studentList.forEach(tableView.getItems()::add);
+            VBox layout = new VBox(tableView);
+            Scene scene = new Scene(layout);
+            subWindow = new Stage();
+            subWindow.setScene(scene);
+            subWindow.setTitle("Student Management");
+            window.setResizable(false);
+            subWindow.sizeToScene();
+            subWindow.showAndWait();
         });
         addStdButton.setOnAction(e->{
-                //
-            stdIdInput.setText("");
-            stdFNameInput.setText("");
-            stdLNameInput.setText("");
-            stdCoursesInput.setText("");
+            Student aStudent = new Student(Integer.parseInt(stdIdInput.getText()), stdFNameInput.getText(), stdLNameInput.getText(), stdCoursesInput.getText());
+            boolean res = dbc.saveStudent(aStudent);
+            if(res){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("Student is added to DB");
+                stdIdInput.setText("");
+                stdFNameInput.setText("");
+                stdLNameInput.setText("");
+                stdCoursesInput.setText("");
+                alert.showAndWait();
+            }
         });
 
         GridPane grid = new GridPane();
@@ -65,9 +80,8 @@ public class Main extends Application {
         grid.setVgap(10);
         grid.setHgap(10);
         grid.setAlignment(Pos.CENTER);
-        GridPane.setConstraints(labelShow, 0,0,1,1);
-        GridPane.setConstraints(showStdButton, 0, 1);
-        GridPane.setConstraints(fileNameInput,1,1);
+        GridPane.setConstraints(labelShow, 0, 0);
+        GridPane.setConstraints(showStdButton, 1, 0);
         GridPane.setConstraints(labelAdd, 0 ,2 );
         GridPane.setConstraints(stdIdLbl, 0,3);
         GridPane.setConstraints(stdIdInput,1,3);
@@ -77,13 +91,15 @@ public class Main extends Application {
         GridPane.setConstraints(stdLNameInput, 1,5);
         GridPane.setConstraints(stdCoursesLbl,0,6);
         GridPane.setConstraints(stdCoursesInput, 1,6);
-        GridPane.setConstraints(addStdButton, 0,7);
-        GridPane.setConstraints(stdFileName, 1,7);
+        GridPane.setConstraints(labelAddStd, 0,7);
+        GridPane.setConstraints(addStdButton, 1,7);
 
-        grid.getChildren().setAll(labelShow, showStdButton,fileNameInput, labelAdd ,stdIdLbl,
-                stdIdInput,stdFNameInput,stdFNameLbl,stdLNameInput,stdLNameLbl,stdCoursesInput,stdCoursesLbl,addStdButton,stdFileName);
+        grid.getChildren().setAll(labelShow, showStdButton, labelAdd ,stdIdLbl,
+                stdIdInput,stdFNameInput,stdFNameLbl,stdLNameInput,stdLNameLbl,stdCoursesInput,stdCoursesLbl,addStdButton, labelAddStd);
         Scene scene = new Scene(grid);
         window.setScene(scene);
+        window.setResizable(false);
+        window.sizeToScene();
         window.show();
     }
 
